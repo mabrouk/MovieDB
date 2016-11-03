@@ -66,8 +66,10 @@ public abstract class ListFragment<T extends BaseModel> extends Fragment impleme
     protected abstract PagingAdapter<T, ?> initAdapter(Context context);
 
     private void needsNewPage() {
-        pagesLoader.loadNextPage();
-        progressBar.setVisibility(View.VISIBLE);
+        if(pagesLoader.hasMorePages()) {
+            pagesLoader.loadNextPage();
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/thumbnail"
             android:layout_marginTop="8dp"
-            android:lines="3"
+            android:maxLines="3"
             android:ellipsize="end"
             android:textColor="#999"/>
 

@@ -1,5 +1,7 @@
 package com.mabrouk.moviedb.common;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -9,8 +11,14 @@ import java.util.List;
 public class ResultList <T extends BaseModel> {
     int page;
     List<T> results;
+    @SerializedName("total_pages")
+    int totalPages;
 
     public List<T> getResults() {
         return results;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
     }
 }

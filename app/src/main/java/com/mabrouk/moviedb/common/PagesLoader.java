@@ -12,7 +12,10 @@ import rx.schedulers.Schedulers;
  */
 
 public class PagesLoader<RD extends BaseModel> {
-    int page = 1;
+    int pageToGet = 1;
+    //initialy 1, cos at least we have one page to load
+    int totalPages = 1;
+
     PageLoadingOperation<ResultList<RD>> operation;
     PageLoadedListener<RD> listener;
     Subscription subscription;
@@ -36,20 +39,31 @@ public class PagesLoader<RD extends BaseModel> {
     public void loadNextPage() {
         if(loading)
             return;
-        loading = true;
+        if(hasMorePages()) {
+            loading = true;
 
-        subscription = operation.loadPage(page)
-                .map(ResultList::getResults)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::loadedPage, this::gotError);
+            subscription = operation.loadPage(pageToGet)
+                    .map(this::map)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::loadedPage, this::gotError);
+        } else {
+            gotError(new Exception("No more pages to get, should've called hasMorePages() first"));
+        }
     }
 
-//    protected abstract List<RD> map(LD dataList);
+    private List<RD> map(ResultList<RD> list) {
+        totalPages = list.totalPages;
+        return list.getResults();
+    }
 
     public void listenForPageLoaded(PageLoadedListener listener) {
         this.listener = listener;
         loadNextPage();
+    }
+
+    public boolean hasMorePages() {
+        return pageToGet <= totalPages;
     }
 
     public void stopListeningForPageLoaded(PageLoadedListener listener) {
@@ -62,7 +76,7 @@ public class PagesLoader<RD extends BaseModel> {
     protected void loadedPage(List<RD> rawDataList) {
         if(listener != null)
             listener.pageLoaded(rawDataList);
-        page++;
+        pageToGet++;
         loading = false;
     }
 

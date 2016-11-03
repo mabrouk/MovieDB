@@ -23,17 +23,16 @@ public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.P
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(applicationContext).inflate(R.layout.row_person, parent, false);
+    public PersonViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        View itemView = inflater.inflate(R.layout.row_person, parent, false);
 
         return new PersonViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder holder, int position) {
-        Person p = list.get(position);
-        holder.name.setText(p.name);
-        Picasso.with(applicationContext).load(p.getThumbnail()).into(holder.thumbnail);
+    public void onBindViewHolder(PersonViewHolder holder, Person data) {
+        holder.name.setText(data.name);
+        Picasso.with(applicationContext).load(data.getThumbnail()).into(holder.thumbnail);
     }
 
     @Override

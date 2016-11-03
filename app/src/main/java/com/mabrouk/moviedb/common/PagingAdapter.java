@@ -2,6 +2,8 @@ package com.mabrouk.moviedb.common;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.mabrouk.moviedb.movie.Movie;
 
@@ -26,6 +28,20 @@ public abstract class PagingAdapter<T,VH extends RecyclerView.ViewHolder> extend
         list.addAll(page);
         notifyItemRangeInserted(positionStart, list.size());
     }
+
+    @Override
+    public void onBindViewHolder(VH holder, int position) {
+        onBindViewHolder(holder, list.get(position));
+    }
+
+    public abstract void onBindViewHolder(VH holder, T data);
+
+    @Override
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return onCreateViewHolder(LayoutInflater.from(applicationContext), parent, viewType);
+    }
+
+    public abstract VH onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType);
 
     @Override
     public int getItemCount() {

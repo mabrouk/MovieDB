@@ -23,14 +23,13 @@ public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.Movi
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(applicationContext).inflate(R.layout.row_movie, parent, false);
+    public MovieViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        View row = inflater.inflate(R.layout.row_movie, parent, false);
         return new MovieViewHolder(row);
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Movie movie = list.get(position);
+    public void onBindViewHolder(MovieViewHolder holder, Movie movie) {
         holder.title.setText(movie.getTitle());
         holder.releaseDate.setText(movie.getReleaseDate());
         holder.overview.setText(movie.getOverview());

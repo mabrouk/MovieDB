@@ -22,7 +22,7 @@ public class MoviesMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_movies_main, container, false);
         ViewPager viewPager = (ViewPager) root.findViewById(R.id. view_pager);
-        MoviesPagerAdapter adapter = new MoviesPagerAdapter(getFragmentManager());
+        MoviesPagerAdapter adapter = new MoviesPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_bar);
         tabLayout.setupWithViewPager(viewPager);

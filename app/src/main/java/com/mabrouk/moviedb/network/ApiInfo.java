@@ -13,4 +13,7 @@ public class ApiInfo {
     public final static String POSTER_SIZE_LARGE = "w780";
     public final static String POSTER_SIZE_ORIGINAL = "original";
 
+    public final static String PROFILE_SIZE_THUMBNAIL = "w185";
+    public final static String PROFILE_SIZE_LARGE = "h632";
+    public final static String PROFILE_SIZE_ORIGINAL = "original";
 }

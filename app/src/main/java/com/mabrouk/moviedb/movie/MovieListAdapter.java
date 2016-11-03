@@ -1,6 +1,5 @@
 package com.mabrouk.moviedb.movie;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,24 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mabrouk.moviedb.common.PagingAdapter;
 import com.mabrouk.moviedb.R;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by VPN on 11/2/2016.
  */
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
-    private List<Movie> movies = new ArrayList<>();
-    private Context applicationContext;
+public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.MovieViewHolder> {
 
     public MovieListAdapter(Context context) {
-        setHasStableIds(true);
-        applicationContext = context.getApplicationContext();
+        super(context);
     }
 
     @Override
@@ -37,7 +30,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Movie movie = movies.get(position);
+        Movie movie = list.get(position);
         holder.title.setText(movie.getTitle());
         holder.releaseDate.setText(movie.getReleaseDate());
         holder.overview.setText(movie.getOverview());
@@ -45,19 +38,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     @Override
-    public int getItemCount() {
-        return movies.size();
-    }
-
-    @Override
     public long getItemId(int position) {
-        return movies.get(position).getId();
-    }
-
-    public void addMovies(List<Movie> moviesToAdd) {
-        int positionStart = movies.size();
-        movies.addAll(moviesToAdd);
-        notifyItemRangeInserted(positionStart, moviesToAdd.size());
+        return list.get(position).getId();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {

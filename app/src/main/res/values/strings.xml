@@ -3,11 +3,12 @@
     <string-array name="drawer_list">
         <item>Movies</item>
         <item>Tv Shows</item>
-        <item>Actors</item>
+        <item>People</item>
     </string-array>
 
     <string name="label_popular">Popular</string>
     <string name="label_top_rated">Top Rated</string>
     <string name="label_upcoming">Upcoming</string>
     <string name="label_now_playing">Now Playing</string>
+
 </resources>

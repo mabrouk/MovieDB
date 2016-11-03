@@ -1,14 +1,14 @@
 package com.mabrouk.moviedb.movie;
 
 import com.google.gson.annotations.SerializedName;
+import com.mabrouk.moviedb.common.BaseModel;
 import com.mabrouk.moviedb.network.ApiInfo;
 
 /**
  * Created by VPN on 11/1/2016.
  */
 
-public class Movie {
-    int id;
+public class Movie extends BaseModel{
     String title;
     @SerializedName("poster_path")
     String posterPath;
@@ -16,10 +16,6 @@ public class Movie {
     String overview;
     @SerializedName("release_date")
     String releaseDate;
-
-    public int getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;

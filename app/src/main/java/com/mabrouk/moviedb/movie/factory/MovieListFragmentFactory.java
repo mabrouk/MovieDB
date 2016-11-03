@@ -3,8 +3,8 @@ package com.mabrouk.moviedb.movie.factory;
 import android.support.v4.app.Fragment;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.common.PagesLoader;
 import com.mabrouk.moviedb.movie.MovieListFragment;
-import com.mabrouk.moviedb.movie.MoviePagesLoader;
 import com.mabrouk.moviedb.movie.api.MovieService;
 import com.mabrouk.moviedb.network.ApiInfo;
 
@@ -55,7 +55,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getPopularFragment() {
         if(popularFragment == null) {
             popularFragment = new MovieListFragment();
-            popularFragment.setPagesLoader(new MoviePagesLoader(MovieListFragmentFactory.movieService::popular));
+            popularFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::popular));
         }
         return popularFragment;
     }
@@ -63,8 +63,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getTopRatedFragment() {
         if(topRatedFragment == null) {
             topRatedFragment = new MovieListFragment();
-            MoviePagesLoader pagesLoader = new MoviePagesLoader(MovieListFragmentFactory.movieService::topRated);
-            topRatedFragment.setPagesLoader(pagesLoader);
+            topRatedFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::topRated));
         }
         return topRatedFragment;
     }
@@ -72,8 +71,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getNowPlayingFragment() {
         if(nowPlayingFragment == null) {
             nowPlayingFragment = new MovieListFragment();
-            MoviePagesLoader pagesLoader = new MoviePagesLoader(MovieListFragmentFactory.movieService::nowPlayingMovies);
-            nowPlayingFragment.setPagesLoader(pagesLoader);
+            nowPlayingFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::nowPlayingMovies));
         }
         return nowPlayingFragment;
     }
@@ -81,8 +79,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getUpcomingFragment() {
         if(upcomingFragment == null) {
             upcomingFragment = new MovieListFragment();
-            MoviePagesLoader pagesLoader = new MoviePagesLoader(MovieListFragmentFactory.movieService::upcoming);
-            upcomingFragment.setPagesLoader(pagesLoader);
+            upcomingFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::nowPlayingMovies));
         }
         return upcomingFragment;
     }

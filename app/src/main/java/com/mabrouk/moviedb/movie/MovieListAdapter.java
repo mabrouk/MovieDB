@@ -36,11 +36,6 @@ public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.Movi
         Picasso.with(applicationContext).load(movie.getThumbnailUrl()).into(holder.thumbnail);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return list.get(position).getId();
-    }
-
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView releaseDate;

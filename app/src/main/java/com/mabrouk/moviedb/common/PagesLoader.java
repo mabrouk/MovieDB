@@ -1,9 +1,5 @@
 package com.mabrouk.moviedb.common;
 
-import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.movie.MovieList;
-import com.mabrouk.moviedb.movie.MoviePagesLoader;
-
 import java.util.List;
 
 import rx.Observable;
@@ -15,16 +11,16 @@ import rx.schedulers.Schedulers;
  * Created by VPN on 11/2/2016.
  */
 
-public abstract class PagesLoader<RD, LD> {
+public class PagesLoader<RD extends BaseModel> {
     int page = 1;
-    PageLoadingOperation<LD> operation;
+    PageLoadingOperation<ResultList<RD>> operation;
     PageLoadedListener<RD> listener;
     Subscription subscription;
 
     //since calling loadingNextPage() and observing are both done on main thread, no need to be atomic
     boolean loading;
 
-    public PagesLoader(PageLoadingOperation<LD> operation) {
+    public PagesLoader(PageLoadingOperation<ResultList<RD>> operation) {
         this.operation = operation;
     }
 
@@ -43,13 +39,13 @@ public abstract class PagesLoader<RD, LD> {
         loading = true;
 
         subscription = operation.loadPage(page)
-                .map(this::map)
+                .map(ResultList::getResults)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::loadedPage, this::gotError);
     }
 
-    protected abstract List<RD> map(LD dataList);
+//    protected abstract List<RD> map(LD dataList);
 
     public void listenForPageLoaded(PageLoadedListener listener) {
         this.listener = listener;

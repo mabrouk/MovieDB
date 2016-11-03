@@ -14,7 +14,7 @@ import java.util.List;
  * Created by VPN on 11/3/2016.
  */
 
-public abstract class PagingAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
+public abstract class PagingAdapter<T extends BaseModel,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
     protected List<T> list = new ArrayList<>();
     protected Context applicationContext;
 
@@ -46,5 +46,10 @@ public abstract class PagingAdapter<T,VH extends RecyclerView.ViewHolder> extend
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return list.get(position).getId();
     }
 }

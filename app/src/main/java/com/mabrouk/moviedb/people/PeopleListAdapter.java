@@ -35,11 +35,6 @@ public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.P
         Picasso.with(applicationContext).load(data.getThumbnail()).into(holder.thumbnail);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return list.get(position).id;
-    }
-
     static class PersonViewHolder extends RecyclerView.ViewHolder{
         ImageView thumbnail;
         TextView name;

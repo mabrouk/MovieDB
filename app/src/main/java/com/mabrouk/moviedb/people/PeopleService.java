@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.people;
 
+import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.network.ApiInfo;
 
 import retrofit2.http.GET;
@@ -12,5 +13,5 @@ import rx.Observable;
 
 public interface PeopleService {
     @GET("person/popular?api_key=" + ApiInfo.API_KEY)
-    Observable<PersonList> getPopularPeople(@Query("page") int page);
+    Observable<ResultList<Person>> getPopularPeople(@Query("page") int page);
 }

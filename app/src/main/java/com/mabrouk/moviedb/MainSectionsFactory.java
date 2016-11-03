@@ -2,11 +2,12 @@ package com.mabrouk.moviedb;
 
 import android.support.v4.app.Fragment;
 
+import com.mabrouk.moviedb.common.PagesLoader;
 import com.mabrouk.moviedb.movie.MoviesMainFragment;
 import com.mabrouk.moviedb.network.ApiInfo;
 import com.mabrouk.moviedb.people.PeopleListFragment;
-import com.mabrouk.moviedb.people.PeoplePagesLoader;
 import com.mabrouk.moviedb.people.PeopleService;
+import com.mabrouk.moviedb.tv.TvMainFragment;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -19,11 +20,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainSectionsFactory {
     private MoviesMainFragment moviesMainFragment = new MoviesMainFragment();
     private PeopleListFragment peopleListFragment;
+    private TvMainFragment tvMainFragment = new TvMainFragment();
 
     public Fragment fragmentForPage(int pageIndex) {
         switch (pageIndex) {
             case 0:
                 return moviesMainFragment;
+            case 1:
+                return tvMainFragment;
             case 2:
                 return getPeopleListFragment();
             default:
@@ -37,9 +41,8 @@ public class MainSectionsFactory {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(PeopleService.class);
-            PeoplePagesLoader peoplePagesLoader = new PeoplePagesLoader(service::getPopularPeople);
             peopleListFragment = new PeopleListFragment();
-            peopleListFragment.setPagesLoader(peoplePagesLoader);
+            peopleListFragment.setPagesLoader(new PagesLoader<>(service::getPopularPeople));
         }
         return peopleListFragment;
     }

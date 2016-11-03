@@ -18,7 +18,7 @@ import java.util.List;
  * Created by VPN on 11/2/2016.
  */
 
-public abstract class ListFragment<T> extends Fragment implements PagesLoader.PageLoadedListener<T>{
+public abstract class ListFragment<T extends BaseModel> extends Fragment implements PagesLoader.PageLoadedListener<T>{
     private RecyclerView recyclerView;
     protected PagingAdapter<T, ?> adapter;
     private PagesLoader pagesLoader;

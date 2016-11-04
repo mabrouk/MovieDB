@@ -6,6 +6,7 @@ import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagesLoader;
 import com.mabrouk.moviedb.movie.MovieListFragment;
 import com.mabrouk.moviedb.movie.api.MovieService;
+import com.mabrouk.moviedb.movie.api.ServiceProvider;
 import com.mabrouk.moviedb.network.ApiInfo;
 
 import retrofit2.Retrofit;
@@ -18,13 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieListFragmentFactory {
     public final static int SECTIONS_COUNT = 4;
-
-    private static MovieService movieService = new Retrofit.Builder()
-            .baseUrl(ApiInfo.BASE_URL)
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MovieService.class);
 
     private MovieListFragment popularFragment;
     private MovieListFragment topRatedFragment;
@@ -55,7 +49,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getPopularFragment() {
         if(popularFragment == null) {
             popularFragment = new MovieListFragment();
-            popularFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::popular));
+            popularFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::popular));
         }
         return popularFragment;
     }
@@ -63,7 +57,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getTopRatedFragment() {
         if(topRatedFragment == null) {
             topRatedFragment = new MovieListFragment();
-            topRatedFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::topRated));
+            topRatedFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::topRated));
         }
         return topRatedFragment;
     }
@@ -71,7 +65,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getNowPlayingFragment() {
         if(nowPlayingFragment == null) {
             nowPlayingFragment = new MovieListFragment();
-            nowPlayingFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::nowPlayingMovies));
+            nowPlayingFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::nowPlayingMovies));
         }
         return nowPlayingFragment;
     }
@@ -79,7 +73,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getUpcomingFragment() {
         if(upcomingFragment == null) {
             upcomingFragment = new MovieListFragment();
-            upcomingFragment.setPagesLoader(new PagesLoader<>(MovieListFragmentFactory.movieService::nowPlayingMovies));
+            upcomingFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::nowPlayingMovies));
         }
         return upcomingFragment;
     }

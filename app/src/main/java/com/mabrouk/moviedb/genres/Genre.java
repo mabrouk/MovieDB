@@ -7,4 +7,9 @@ import com.mabrouk.moviedb.common.BaseModel;
  */
 
 public class Genre extends BaseModel{
+    String name;
+
+    public String getName() {
+        return name;
+    }
 }

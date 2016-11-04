@@ -16,4 +16,10 @@ public class ApiInfo {
     public final static String PROFILE_SIZE_THUMBNAIL = "w185";
     public final static String PROFILE_SIZE_LARGE = "h632";
     public final static String PROFILE_SIZE_ORIGINAL = "original";
+
+    public final static String BACKDROP_SIZE_XHIGH = "w780";
+    public final static String BACKDROP_SIZE_XXHIGH = "w1280";
+    public final static String BACKDROP_SIZE_ORIGINAL = "original";
+
+
 }

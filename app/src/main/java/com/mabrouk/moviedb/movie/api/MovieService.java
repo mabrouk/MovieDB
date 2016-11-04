@@ -2,9 +2,12 @@ package com.mabrouk.moviedb.movie.api;
 
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.Movie;
+import com.mabrouk.moviedb.movie.details.MovieCredits;
+import com.mabrouk.moviedb.movie.details.MovieVideo;
 import com.mabrouk.moviedb.network.ApiInfo;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -27,4 +30,10 @@ public interface MovieService {
 
     @GET("search/movie?api_key=" + ApiInfo.API_KEY)
     Observable<ResultList<Movie>> search(@Query("query") String query, @Query("page") int page);
+
+    @GET("movie/{movie_id}/videos?api_key=" + ApiInfo.API_KEY)
+    Observable<MovieVideo.VideoList> getMovieVideos(@Path("movie_id") int movieId);
+
+    @GET("movie/{movie_id}/credits?api_key=" + ApiInfo.API_KEY)
+    Observable<MovieCredits> getMovieCredits(@Path("movie_id") int movieId);
 }

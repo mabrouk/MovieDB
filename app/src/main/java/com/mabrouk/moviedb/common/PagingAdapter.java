@@ -38,7 +38,7 @@ public abstract class PagingAdapter<T extends BaseModel,VH extends RecyclerView.
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return onCreateViewHolder(LayoutInflater.from(applicationContext), parent, viewType);
+        return onCreateViewHolder(LayoutInflater.from(parent.getContext()), parent, viewType);
     }
 
     public abstract VH onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType);

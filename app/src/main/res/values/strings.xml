@@ -8,4 +8,7 @@
     <string name="label_now_playing">Now Playing</string>
     <string name="label_airing">On Tv</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

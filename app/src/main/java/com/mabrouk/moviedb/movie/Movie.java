@@ -89,4 +89,14 @@ public class Movie extends BaseModel{
     public String getDisplayableRating() {
         return String.format(Locale.US, "%.1f", rating);
     }
+
+    public void populateFrom(Movie other) {
+        this.genres = other.genres;
+        this.revenue = other.revenue;
+        this.budget = other.budget;
+        this.status = other.status;
+        this.imdb = other.imdb;
+        this.website = other.website;
+        this.runtime = other.runtime;
+    }
 }

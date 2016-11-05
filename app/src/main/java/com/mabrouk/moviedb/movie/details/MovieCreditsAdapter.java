@@ -38,7 +38,7 @@ public class MovieCreditsAdapter extends RecyclerView.Adapter<MovieCreditsAdapte
 //            holder.role.setText(crew.getJob());
 //            profileUrl = crew.getProfileUrl();
 //        }else{
-            Cast cast = credits.cast.get(position - credits.crew.size());
+            Cast cast = credits.cast.get(position);
             holder.name.setText(cast.getName());
             holder.role.setText(cast.getCharacter());
             profileUrl = cast.getProfileUrl();

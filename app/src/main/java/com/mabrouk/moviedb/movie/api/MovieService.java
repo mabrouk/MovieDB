@@ -1,6 +1,7 @@
 package com.mabrouk.moviedb.movie.api;
 
 import com.mabrouk.moviedb.common.ResultList;
+import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.movie.details.MovieCredits;
 import com.mabrouk.moviedb.movie.details.MovieVideo;
@@ -36,4 +37,7 @@ public interface MovieService {
 
     @GET("movie/{movie_id}/credits?api_key=" + ApiInfo.API_KEY)
     Observable<MovieCredits> getMovieCredits(@Path("movie_id") int movieId);
+
+    @GET("movie/{movie_id}?api_key=" + ApiInfo.API_KEY)
+    Observable<Movie> getMovieDetails(@Path("movie_id") int movieId);
 }

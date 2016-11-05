@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.movie.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +42,7 @@ public class RecommendedMoviesAdapter extends RecyclerView.Adapter<RecommendedMo
         holder.itemView.setTag(movie);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(movie.getDisplayableRating());
+        RatingUtils.loadRatingDrawableIntoView(movie, holder.rating);
         Picasso.with(holder.itemView.getContext()).load(movie.getLargeThumbnailUrl()).into(holder.thumbnail);
     }
 

@@ -29,10 +29,11 @@ public class DataBag {
         moviesPocket.removeObject(movieId);
     }
 
+    // No synchronization needed, as all the calls will be made from UI thread
     static class Pocket<T extends BaseModel> {
         HashMap<Integer, Pair<Integer, T>> pocketMap = new HashMap<>();
 
-        synchronized public void addObject(T object) {
+        public void addObject(T object) {
             Pair<Integer, T> pair = pocketMap.get(object.getId());
             if(pair == null)
                 pair = new Pair<>(1, object);
@@ -41,15 +42,18 @@ public class DataBag {
             pocketMap.put(object.getId(), pair);
         }
 
-        synchronized public T getObject(int movieId) {
+        public T getObject(int movieId) {
             Pair<Integer, T> pair = pocketMap.get(movieId);
             if (pair == null)
-                throw new IllegalArgumentException("There's no movie with the specified id");
+                return null;
             return pair.second;
         }
 
-        synchronized public void removeObject(int movieId) {
+        public void removeObject(int movieId) {
             Pair<Integer, T> pair = pocketMap.get(movieId);
+            if (pair == null)
+                return;
+
             if (pair.first == 1)
                 pocketMap.remove(movieId);
             else

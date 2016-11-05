@@ -23,14 +23,13 @@ import java.util.List;
 public class MovieVideosAdapter extends RecyclerView.Adapter<MovieVideosAdapter.VideoViewHolder> {
     List<MovieVideo> videos = new ArrayList<>();
 
-    public void setVideos(List<MovieVideo> videos) {
+    public MovieVideosAdapter(List<MovieVideo> videos) {
         this.videos = videos;
-        notifyDataSetChanged();
     }
 
     @Override
     public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_movie_video, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_movie_video, parent, false);
         itemView.setOnClickListener(view -> {
             MovieVideo video = (MovieVideo) view.getTag();
             String youtubeUrl = ExternalUrlUtil.youtubeUrlForKey(video.key);

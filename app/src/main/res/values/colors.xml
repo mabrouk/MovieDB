@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background_color">#EEEEEE</color>
+
+    <color name="rating_yellow">#FFEA00</color>
+    <color name="rating_orange">#FF9100</color>
+    <color name="rating_red">#d50000</color>
+
 </resources>

@@ -5,6 +5,9 @@ import com.mabrouk.moviedb.common.BaseModel;
 import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.network.ApiInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,6 +79,18 @@ public class Movie extends BaseModel{
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    public String getFormattedReleaseDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmp = null;
+        try {
+            tmp = dateFormat.parse(releaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        return dateFormat.format(tmp);
     }
 
     public String getThumbnailUrl() {

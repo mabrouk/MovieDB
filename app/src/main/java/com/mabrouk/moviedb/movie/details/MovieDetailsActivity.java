@@ -2,21 +2,22 @@ package com.mabrouk.moviedb.movie.details;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.ExternalUrlUtil;
+import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.movie.Movie;
@@ -34,8 +35,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     public static void startMovieDetailsActivity(Context context, Movie movie) {
         DataBag.addMovieToPocket(movie);
+        startMovieDetailsActivity(context, movie.getId());
+    }
+
+    public static void startMovieDetailsActivity(Context context, int movieId) {
         Intent intent = new Intent(context, MovieDetailsActivity.class);
-        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movie.getId());
+        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movieId);
         context.startActivity(intent);
     }
 
@@ -43,6 +48,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private Movie movie;
 
     Subscription subscription;
+    TextView genresTextView;
+    ProgressBar genresProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +62,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(movie.getTitle());
 
-        ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
-        Picasso.with(this).load(movie.getBackdropUrl()).into(backdropImageView);
+        if(movie != null) {
+            setBasicUI(movie);
+        }
 
-        TextView rating = (TextView) findViewById(R.id.rating);
-        rating.setText(movie.getDisplayableRating());
-
-//        GradientDrawable bgShape = (GradientDrawable)rating.getBackground();
-//        bgShape.setColor(Color.YELLOW);
-
-        ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
-        ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getReleaseDate());
+        genresTextView = (TextView) findViewById(R.id.genres_textview);
+        genresProgress = (ProgressBar) findViewById(R.id.progressBar);
 
         addVideosFragment();
         addCreditsFragment();
         addRecommendedMoviesFragment();
 
+       subscribeToService();
+    }
+
+    private void setBasicUI(Movie movie) {
+        ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
+        TextView rating = (TextView) findViewById(R.id.rating);
+
+        setTitle(movie.getTitle());
+        Picasso.with(this).load(movie.getBackdropUrl()).into(backdropImageView);
+        rating.setText(movie.getDisplayableRating());
+        RatingUtils.loadRatingDrawableIntoView(movie, rating);
+
+        ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
+        ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getFormattedReleaseDate());
+    }
+
+    private void subscribeToService() {
         subscription = ServiceProvider.getService().getMovieDetails(movieId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,9 +99,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void gotError(Throwable e) {
         e.printStackTrace();
+        genresTextView.setVisibility(View.VISIBLE);
+        genresTextView.setText("Couldn't load genres\nTap to retry");
+        genresTextView.setOnClickListener(view -> {
+            genresTextView.setVisibility(View.GONE);
+            genresProgress.setVisibility(View.VISIBLE);
+            subscribeToService();
+        });
+        genresProgress.setVisibility(View.INVISIBLE);
     }
 
     private void gotMovieWithDetails(Movie movie) {
+        if(this.movie == null)
+            setBasicUI(movie);
+
         this.movie.populateFrom(movie);
 
         if(!movie.getImdb().isEmpty()) {
@@ -102,22 +131,26 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void addGenres() {
-        findViewById(R.id.genres_layout).findViewById(R.id.progressBar).setVisibility(View.GONE);
+        genresProgress.setVisibility(View.GONE);
 
-        //I really should throw this library and do it myself
-        FlowLayout layout = (FlowLayout) findViewById(R.id.flow_layout);
+        if(movie.getGenres().isEmpty()) {
+            genresTextView.setText("No genres available");
+            genresTextView.setVisibility(View.VISIBLE);
+        }else{
+            genresTextView.setVisibility(View.GONE);
+            FlowLayout layout = (FlowLayout) findViewById(R.id.flow_layout);
 
-        for (Genre genre : movie.getGenres()) {
-            View buttonLayout = getLayoutInflater().inflate(R.layout.button_gener, null);
-            Button button = (Button) buttonLayout.findViewById(R.id.button);
-            button.setText(genre.getName());
-            layout.addView(buttonLayout);
+            for (Genre genre : movie.getGenres()) {
+                View buttonLayout = getLayoutInflater().inflate(R.layout.button_gener, null);
+                Button button = (Button) buttonLayout.findViewById(R.id.button);
+                button.setText(genre.getName());
+                layout.addView(buttonLayout);
+            }
         }
     }
 
     private void addVideosFragment() {
-        MovieVideosFragment videosFragment = new MovieVideosFragment();
-        videosFragment.setMovie(movie);
+        MovieVideosFragment videosFragment = MovieVideosFragment.createInstance(movie);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.videos_layout, videosFragment)

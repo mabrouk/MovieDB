@@ -8,8 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.people.Cast;
-import com.mabrouk.moviedb.people.Crew;
 import com.squareup.picasso.Picasso;
 
 /**

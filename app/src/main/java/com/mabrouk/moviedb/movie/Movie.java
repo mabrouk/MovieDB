@@ -82,6 +82,10 @@ public class Movie extends BaseModel{
         return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_THUMBNAIL + posterPath;
     }
 
+    public String getLargeThumbnailUrl() {
+        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE_THUMBNAIL + posterPath;
+    }
+
     public String getBackdropUrl() {
         return ApiInfo.IMAGES_BASE_URL + ApiInfo.BACKDROP_SIZE_XHIGH + backdropPath;
     }

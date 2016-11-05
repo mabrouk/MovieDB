@@ -40,4 +40,8 @@ public interface MovieService {
 
     @GET("movie/{movie_id}?api_key=" + ApiInfo.API_KEY)
     Observable<Movie> getMovieDetails(@Path("movie_id") int movieId);
+
+    @GET("movie/{movie_id}/recommendations?api_key=" + ApiInfo.API_KEY)
+    Observable<ResultList<Movie>> getMovieRecommendations(@Path("movie_id") int movieId);
+
 }

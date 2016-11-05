@@ -34,10 +34,7 @@ public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.Movi
 
     void rowClicked(View row) {
         Movie movie = (Movie) row.getTag();
-        DataBag.addMovieToPocket(movie);
-        Intent intent = new Intent(row.getContext(), MovieDetailsActivity.class);
-        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movie.getId());
-        row.getContext().startActivity(intent);
+        MovieDetailsActivity.startMovieDetailsActivity(row.getContext(), movie);
     }
 
     @Override

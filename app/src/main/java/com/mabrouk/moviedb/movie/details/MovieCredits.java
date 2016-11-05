@@ -1,8 +1,5 @@
 package com.mabrouk.moviedb.movie.details;
 
-import com.mabrouk.moviedb.people.Cast;
-import com.mabrouk.moviedb.people.Crew;
-
 import java.util.ArrayList;
 import java.util.List;
 

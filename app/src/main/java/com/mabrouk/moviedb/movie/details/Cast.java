@@ -1,4 +1,4 @@
-package com.mabrouk.moviedb.people;
+package com.mabrouk.moviedb.movie.details;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;

@@ -10,6 +10,7 @@ public class ApiInfo {
     public final static String IMAGES_BASE_URL = "http://image.tmdb.org/t/p/";
 
     public final static String POSTER_SIZE_THUMBNAIL = "w92";
+    public final static String POSTER_SIZE_LARGE_THUMBNAIL = "w185";
     public final static String POSTER_SIZE_LARGE = "w780";
     public final static String POSTER_SIZE_ORIGINAL = "original";
 

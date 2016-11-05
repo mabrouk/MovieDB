@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.movie.details;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +31,14 @@ import rx.schedulers.Schedulers;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE_ID = "movie_id";
+
+    public static void startMovieDetailsActivity(Context context, Movie movie) {
+        DataBag.addMovieToPocket(movie);
+        Intent intent = new Intent(context, MovieDetailsActivity.class);
+        intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movie.getId());
+        context.startActivity(intent);
+    }
+
     private int movieId;
     private Movie movie;
 
@@ -53,14 +63,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
         TextView rating = (TextView) findViewById(R.id.rating);
         rating.setText(movie.getDisplayableRating());
 
-        GradientDrawable bgShape = (GradientDrawable)rating.getBackground();
-        bgShape.setColor(Color.YELLOW);
+//        GradientDrawable bgShape = (GradientDrawable)rating.getBackground();
+//        bgShape.setColor(Color.YELLOW);
 
         ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
         ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getReleaseDate());
 
         addVideosFragment();
         addCreditsFragment();
+        addRecommendedMoviesFragment();
 
         subscription = ServiceProvider.getService().getMovieDetails(movieId)
                 .subscribeOn(Schedulers.io())
@@ -117,6 +128,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Fragment fragment = MovieCreditsFragment.newInstance(movie);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.cast_layout, fragment)
+                .commit();
+    }
+
+    private void addRecommendedMoviesFragment() {
+        Fragment fragment = RecommendedMoviesFragment.newInstance(movie);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.layout_recommended_movies, fragment)
                 .commit();
     }
 

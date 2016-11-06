@@ -23,10 +23,6 @@ public class RatingUtils {
         else
             drawableRes = R.drawable.shape_yellow_circle;
 
-        Drawable ratingDrawable = view.getContext().getResources().getDrawable(drawableRes);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            view.setBackground(ratingDrawable);
-        else
-            view.setBackgroundDrawable(ratingDrawable);
+            view.setBackgroundResource(drawableRes);
     }
 }

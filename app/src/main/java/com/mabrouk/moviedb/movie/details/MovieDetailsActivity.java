@@ -139,10 +139,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }else{
             genresTextView.setVisibility(View.GONE);
             FlowLayout layout = (FlowLayout) findViewById(R.id.flow_layout);
+            int backgroundResource = Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP ? R.drawable.shape_rounded_rect
+                    : R.drawable.genre_ripple_background;
 
             for (Genre genre : movie.getGenres()) {
                 View buttonLayout = getLayoutInflater().inflate(R.layout.button_gener, null);
                 Button button = (Button) buttonLayout.findViewById(R.id.button);
+                button.setBackgroundResource(backgroundResource);
                 button.setText(genre.getName());
                 layout.addView(buttonLayout);
             }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Pair;
 
 import com.mabrouk.moviedb.movie.Movie;
+import com.mabrouk.moviedb.people.Person;
 
 import java.util.HashMap;
 
@@ -16,6 +17,8 @@ import java.util.HashMap;
  */
 public class DataBag {
     static Pocket<Movie> moviesPocket = new Pocket<>();
+    static Pocket<Person> peoplePocket = new Pocket<>();
+
 
     public static void addMovieToPocket(Movie movie) {
         moviesPocket.addObject(movie);
@@ -28,6 +31,19 @@ public class DataBag {
     public static void removeMovieFromPocket(int movieId) {
         moviesPocket.removeObject(movieId);
     }
+
+    public static void addPersonToPocket(Person person) {
+        peoplePocket.addObject(person);
+    }
+
+    public static Person getPersonFromPocket(int personId) {
+        return peoplePocket.getObject(personId);
+    }
+
+    public static void removePersonFromPocket(int personId) {
+        peoplePocket.removeObject(personId);
+    }
+
 
     // No synchronization needed, as all the calls will be made from UI thread
     static class Pocket<T extends BaseModel> {

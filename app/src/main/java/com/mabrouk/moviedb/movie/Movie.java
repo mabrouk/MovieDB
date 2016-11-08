@@ -2,6 +2,7 @@ package com.mabrouk.moviedb.movie;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
+import com.mabrouk.moviedb.common.DateUtils;
 import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.network.ApiInfo;
 
@@ -82,15 +83,7 @@ public class Movie extends BaseModel{
     }
 
     public String getFormattedReleaseDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date tmp = null;
-        try {
-            tmp = dateFormat.parse(releaseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        return dateFormat.format(tmp);
+        return DateUtils.formatDateString(releaseDate);
     }
 
     public String getThumbnailUrl() {

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagingAdapter;
+import com.mabrouk.moviedb.people.details.PersonDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -25,12 +26,16 @@ public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.P
     @Override
     public PersonViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
         View itemView = inflater.inflate(R.layout.row_person, parent, false);
-
+        itemView.setOnClickListener(view -> {
+            Person p = (Person) view.getTag();
+            PersonDetailsActivity.startInstance(view.getContext(), p);
+        });
         return new PersonViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(PersonViewHolder holder, Person data) {
+        holder.itemView.setTag(data);
         holder.name.setText(data.name);
         Picasso.with(applicationContext).load(data.getThumbnail()).into(holder.thumbnail);
     }

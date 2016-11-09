@@ -119,6 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:visibility="invisible"
         android:layout_below="@id/person_card">
 
         <android.support.v4.view.PagerTabStrip

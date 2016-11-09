@@ -3,6 +3,8 @@ package com.mabrouk.moviedb.people;
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
 import com.mabrouk.moviedb.common.DateUtils;
+import com.mabrouk.moviedb.common.ExternalUrlUtil;
+import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.network.ApiInfo;
 import com.mabrouk.moviedb.people.details.ExternalIds;
 import com.mabrouk.moviedb.people.details.PersonCredit;
@@ -27,15 +29,26 @@ public class Person extends BaseModel {
     String deathDate;
     String biography;
 
+    @SerializedName("imdb_id")
     String imbdId;
     String homepage;
 
+    @SerializedName("known_for")
+    List<Movie> knownFor;
 
     @SerializedName("external_ids")
     ExternalIds externalIds;
 
     List<ProfileImage> profileImages;
     List<PersonCredit> creditList;
+
+    public boolean hasHomepage() {
+        return homepage != null && homepage.length() > 0;
+    }
+
+    public boolean hasImdb() {
+        return imbdId != null && imbdId.length() > 0;
+    }
 
     public String getThumbnail() {
         return ApiInfo.IMAGES_BASE_URL + ApiInfo.PROFILE_SIZE_LARGE + profilePath;
@@ -57,8 +70,8 @@ public class Person extends BaseModel {
         return biography;
     }
 
-    public String getImbdId() {
-        return imbdId;
+    public String getImbdUrl() {
+        return ExternalUrlUtil.IMDBUrlForPerson(imbdId);
     }
 
     public String getHomepage() {
@@ -77,6 +90,10 @@ public class Person extends BaseModel {
         return creditList;
     }
 
+    public List<Movie> getKnownFor() {
+        return knownFor;
+    }
+
     public void populateFrom(Person other) {
         biography = other.biography;
         birthDate = other.birthDate;
@@ -87,6 +104,7 @@ public class Person extends BaseModel {
             PersonResult result = (PersonResult) other;
             this.profileImages = result.getProfileImages();
             this.creditList = result.getCombinedCredits();
+            this.externalIds = result.getExternalIds();
         }
     }
 

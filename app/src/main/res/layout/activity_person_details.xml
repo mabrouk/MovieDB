@@ -81,35 +81,45 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_fb_f_logo__blue_512"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/twitter_icon"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_twitter_logo_white_on_blue"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/instagram_icon"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_instagram_logo"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/imdb_icon"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_imdblogo"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/homepage"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_website"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </RelativeLayout>

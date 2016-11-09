@@ -179,10 +179,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void openUrl(View v) {
         String url = v.getId() == R.id.homepage_btn ? movie.getWebsite()
                 : ExternalUrlUtil.IMDBUrlForTitle(movie.getImdb());
-        Intent intent = new Intent(this, WebviewActivity.class);
-        intent.putExtra(WebviewActivity.EXTRA_TITLE, movie.getTitle());
-        intent.putExtra(WebviewActivity.EXTRA_URL, url);
-        startActivity(intent);
+        WebviewActivity.startInstance(this, url, movie.getTitle());
     }
 
     @Override

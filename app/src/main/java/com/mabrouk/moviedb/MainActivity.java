@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setAdapter(new DrawerListAdapter(sections));
         drawerList.setOnItemClickListener((parent, view, position, id) -> selectSection(position));
 
-        selectSection(0);
+        selectSection(2);
     }
 
     private void selectSection(int position) {

@@ -6,9 +6,6 @@ import com.mabrouk.moviedb.common.DateUtils;
 import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.network.ApiInfo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,7 +13,7 @@ import java.util.Locale;
  * Created by VPN on 11/1/2016.
  */
 
-public class Movie extends BaseModel{
+public class Movie extends BaseModel {
     String title;
     @SerializedName("poster_path")
     String posterPath;

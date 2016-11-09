@@ -1,6 +1,5 @@
 package com.mabrouk.moviedb.common;
 
-import android.content.Intent;
 import android.util.Pair;
 
 import com.mabrouk.moviedb.movie.Movie;

@@ -2,10 +2,17 @@ package com.mabrouk.moviedb.people.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +29,7 @@ import com.squareup.picasso.Picasso;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class PersonDetailsActivity extends AppCompatActivity {
     private static final String EXTRA_PERSON_ID = "person_id";
@@ -72,12 +80,12 @@ public class PersonDetailsActivity extends AppCompatActivity {
         birthDate.setText("Birth Date: " + person.getBirthDate());
         if (!person.getDeathDate().isEmpty())
             deathDate.setText("Death Date: " + person.getDeathDate());
-
         viewPager.setAdapter(new ViewPagerAdapter(getLayoutInflater(), person));
+
     }
 
     void gotError(Throwable e) {
-
+        e.printStackTrace();
     }
 
     static class ViewPagerAdapter extends PagerAdapter {
@@ -98,17 +106,31 @@ public class PersonDetailsActivity extends AppCompatActivity {
         }
 
         @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Context context = container.getContext();
             View view;
-//            if(position == 1) {
-                view = inflater.inflate(R.layout.layout_biography, container);
+            int padding = (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin);
+            if(position == 0) {
+                view = inflater.inflate(R.layout.layout_biography, container, false);
                 ((TextView) view.findViewById(R.id.biography)).setText(person.getBiography());
-//            }else{
-//                view = new View(context);
-//                container.addView(view);
-//            }
-
+            } else if(position == 2) {
+                RecyclerView recyclerView = new RecyclerView(context);
+                GridLayoutManager layoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(new GalleryAdapter(person.getProfileImages()));
+                view = recyclerView;
+            }else{
+                StickyListHeadersListView listView = new StickyListHeadersListView(context);
+                listView.setAdapter(new PersonCreditsAdapter(person.getCreditList(), inflater));
+                view = listView;
+            }
+            view.setPadding(padding, padding, padding, padding);
+            container.addView(view);
             return view;
         }
 
@@ -122,4 +144,5 @@ public class PersonDetailsActivity extends AppCompatActivity {
                 return "Gallery";
         }
     }
+
 }

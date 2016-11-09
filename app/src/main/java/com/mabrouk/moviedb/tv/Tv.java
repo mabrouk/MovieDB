@@ -10,7 +10,7 @@ import java.util.Locale;
  * Created by VPN on 11/3/2016.
  */
 
-public class Tv extends BaseModel{
+public class Tv extends BaseModel {
     String name;
     @SerializedName("poster_path")
     String posterPath;

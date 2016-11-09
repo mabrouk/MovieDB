@@ -70,10 +70,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         genresTextView = (TextView) findViewById(R.id.genres_textview);
         genresProgress = (ProgressBar) findViewById(R.id.progressBar);
 
-        addVideosFragment();
-        addCreditsFragment();
-        addRecommendedMoviesFragment();
-
        subscribeToService();
     }
 
@@ -88,6 +84,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
         ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getFormattedReleaseDate());
+
+        addVideosFragment();
+        addCreditsFragment();
+        addRecommendedMoviesFragment();
     }
 
     private void subscribeToService() {
@@ -112,8 +112,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void gotMovieWithDetails(Movie movie) {
         if(this.movie == null)
             setBasicUI(movie);
-
-        this.movie.populateFrom(movie);
+        if(this.movie == null)
+            this.movie = movie;
+        else
+            this.movie.populateFrom(movie);
 
         if(!movie.getImdb().isEmpty()) {
             View imdbButton = findViewById(R.id.imdb_btn);

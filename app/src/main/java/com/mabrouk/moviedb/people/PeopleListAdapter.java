@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagingAdapter;
+import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.people.details.PersonDetailsActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Created by VPN on 11/3/2016.
@@ -37,16 +40,29 @@ public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.P
     public void onBindViewHolder(PersonViewHolder holder, Person data) {
         holder.itemView.setTag(data);
         holder.name.setText(data.name);
+
+        StringBuilder builder = new StringBuilder(16 * 6);
+        List<Movie> knownFor = data.getKnownFor();
+        int size = knownFor.size();
+        int min = size > 6 ? 6 : size;
+        for(int i = 0; i < min && i < 6; i++) {
+            builder.append(knownFor.get(i).getTitle());
+            if(i < min - 1)
+                builder.append(", ");
+        }
+        holder.knownFor.setText(builder.toString());
         Picasso.with(applicationContext).load(data.getThumbnail()).into(holder.thumbnail);
     }
 
     static class PersonViewHolder extends RecyclerView.ViewHolder{
         ImageView thumbnail;
         TextView name;
+        TextView knownFor;
         public PersonViewHolder(View itemView) {
             super(itemView);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
             name = (TextView) itemView.findViewById(R.id.name);
+            knownFor= (TextView) itemView.findViewById(R.id.known_for_text);
         }
     }
 }

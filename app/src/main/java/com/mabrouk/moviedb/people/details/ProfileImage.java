@@ -18,4 +18,8 @@ public class ProfileImage {
     public String getThumbnailUrl() {
         return ApiInfo.IMAGES_BASE_URL + ApiInfo.PROFILE_SIZE_LARGE + filePath;
     }
+
+    public String getOriginalUrl() {
+        return ApiInfo.IMAGES_BASE_URL + ApiInfo.PROFILE_SIZE_ORIGINAL + filePath;
+    }
 }

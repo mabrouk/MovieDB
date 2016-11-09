@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.common.ImageViewerActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,7 +34,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     @Override
     public void onBindViewHolder(GalleryAdapter.GalleryViewHolder holder, int position) {
         ImageView imageView = (ImageView) holder.itemView;
-
+        ProfileImage image = images.get(position);
+        imageView.setOnClickListener(view ->
+                ImageViewerActivity.startInstance(imageView.getContext(), image.getOriginalUrl(), image.getThumbnailUrl()));
         Picasso.with(imageView.getContext()).load(images.get(position).getThumbnailUrl()).into(imageView);
     }
 

@@ -110,12 +110,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void gotMovieWithDetails(Movie movie) {
-        if(this.movie == null)
-            setBasicUI(movie);
-        if(this.movie == null)
+        if(this.movie == null) {
             this.movie = movie;
-        else
+            setBasicUI(movie);
+        } else {
             this.movie.populateFrom(movie);
+        }
 
         if(!movie.getImdb().isEmpty()) {
             View imdbButton = findViewById(R.id.imdb_btn);
@@ -141,7 +141,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }else{
             genresTextView.setVisibility(View.GONE);
             FlowLayout layout = (FlowLayout) findViewById(R.id.flow_layout);
-            int backgroundResource = Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP ? R.drawable.shape_rounded_rect
+            int backgroundResource = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ? R.drawable.shape_rounded_rect
                     : R.drawable.genre_ripple_background;
 
             for (Genre genre : movie.getGenres()) {

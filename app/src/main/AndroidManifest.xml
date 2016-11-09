@@ -26,8 +26,10 @@
         <activity
             android:name=".common.WebviewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".people.details.PersonDetailsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".people.details.PersonDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".common.ImageViewerActivity"></activity>
     </application>
 
 </manifest>

@@ -81,7 +81,6 @@ public class PersonDetailsActivity extends AppCompatActivity {
         if (!person.getDeathDate().isEmpty())
             deathDate.setText("Death Date: " + person.getDeathDate());
         viewPager.setAdapter(new ViewPagerAdapter(getLayoutInflater(), person));
-
     }
 
     void gotError(Throwable e) {

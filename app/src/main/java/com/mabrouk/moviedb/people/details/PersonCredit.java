@@ -27,6 +27,12 @@ public abstract class PersonCredit extends BaseModel {
 
     public abstract String getRole();
 
+    public String getReleaseDate() {
+        if(releaseDate == null)
+            return "";
+        return releaseDate;
+    }
+
     public boolean isMovieCredit() {
         return mediaType.equals("movie");
     }

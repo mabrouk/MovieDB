@@ -87,7 +87,7 @@ public class PersonCreditsAdapter extends BaseAdapter implements StickyListHeade
 
     private void viewClicked(View view, PersonCredit credit) {
         if(credit.isMovieCredit()) {
-            MovieDetailsActivity.startMovieDetailsActivity(view.getContext(), credit.getId());
+            MovieDetailsActivity.startMovieDetailsActivity(view.getContext(), credit.getId(), credit.getTitle());
         }
     }
 

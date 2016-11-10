@@ -32,15 +32,17 @@ import rx.schedulers.Schedulers;
 
 public class MovieDetailsActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE_ID = "movie_id";
+    public static final String EXTRA_MOVIE_TITLE = "movie_title";
 
     public static void startMovieDetailsActivity(Context context, Movie movie) {
         DataBag.addMovieToPocket(movie);
-        startMovieDetailsActivity(context, movie.getId());
+        startMovieDetailsActivity(context, movie.getId(), movie.getTitle());
     }
 
-    public static void startMovieDetailsActivity(Context context, int movieId) {
+    public static void startMovieDetailsActivity(Context context, int movieId, String title) {
         Intent intent = new Intent(context, MovieDetailsActivity.class);
         intent.putExtra(MovieDetailsActivity.EXTRA_MOVIE_ID, movieId);
+        intent.putExtra(EXTRA_MOVIE_TITLE, title);
         context.startActivity(intent);
     }
 

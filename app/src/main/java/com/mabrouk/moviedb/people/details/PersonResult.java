@@ -1,5 +1,7 @@
 package com.mabrouk.moviedb.people.details;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.people.Person;
 
@@ -34,13 +36,10 @@ public class PersonResult extends Person {
     }
 
     private int movieFirstCompare(PersonCredit p1, PersonCredit p2) {
-        int typeCompare = p1.mediaType.compareTo(p2.mediaType);
-        if(p1.releaseDate == null || p2.releaseDate == null)
-            return typeCompare;
+        if(p1.isMovieCredit() && p2.isMovieCredit())
+            return p1.getReleaseDate().compareTo(p2.getReleaseDate()) * -1;
 
-        if(typeCompare == 0 && p1.isMovieCredit())
-            return p1.releaseDate.compareTo(p2.releaseDate) * -1;
-        return typeCompare;
+        return p1.mediaType.compareTo(p2.mediaType);
     }
 
     private int departmentFirstCompare(PersonAsCrew p1, PersonAsCrew p2) {

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.people.details.PersonDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -39,7 +40,8 @@ public class MovieCreditsAdapter extends RecyclerView.Adapter<MovieCreditsAdapte
             Cast cast = credits.cast.get(position);
             holder.name.setText(cast.getName());
             holder.role.setText(cast.getCharacter());
-            profileUrl = cast.getProfileUrl();
+            profileUrl = cast.getThumbnail();
+            holder.itemView.setOnClickListener(view -> PersonDetailsActivity.startInstance(view.getContext(), cast));
 //        }
         Picasso.with(holder.itemView.getContext()).load(profileUrl).into(holder.profilePic);
     }

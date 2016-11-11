@@ -75,10 +75,10 @@ public class PersonCreditsAdapter extends BaseAdapter implements StickyListHeade
             convertView = inflater.inflate(R.layout.row_person_credit, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-            convertView.setOnClickListener(view -> viewClicked(view, credit));
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+        convertView.setOnClickListener(view -> viewClicked(view, credit));
         holder.title.setText(credit.getTitle());
         holder.role.setText(credit.getRole());
         holder.type.setText(credit.getMediaType().toUpperCase());

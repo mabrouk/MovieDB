@@ -11,7 +11,6 @@ import com.mabrouk.moviedb.people.details.PersonCredit;
 import com.mabrouk.moviedb.people.details.PersonResult;
 import com.mabrouk.moviedb.people.details.ProfileImage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -2,7 +2,6 @@ package com.mabrouk.moviedb.movie.details;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,11 +59,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movieId = getIntent().getIntExtra(EXTRA_MOVIE_ID, 0);
         if (movieId == 0)
             throw new IllegalStateException("MovieDetailsActivity intent must contain movie id");
-        movie = DataBag.getMovieFromPocket(movieId);
 
+        String movieTitle = getIntent().getStringExtra(EXTRA_MOVIE_TITLE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(movieTitle);
 
+        movie = DataBag.getMovieFromPocket(movieId);
         if(movie != null) {
             setBasicUI(movie);
         }
@@ -79,7 +80,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
         TextView rating = (TextView) findViewById(R.id.rating);
 
-        setTitle(movie.getTitle());
         Picasso.with(this).load(movie.getBackdropUrl()).into(backdropImageView);
         rating.setText(movie.getDisplayableRating());
         RatingUtils.loadRatingDrawableIntoView(movie, rating);

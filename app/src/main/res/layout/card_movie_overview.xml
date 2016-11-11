@@ -32,22 +32,23 @@
             android:layout_marginTop="12dp"
             android:textSize="16sp"/>
 
-        <Button android:id="@+id/imdb_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView android:id="@+id/imdb_btn"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/overview"
             android:layout_marginTop="8dp"
             android:visibility="gone"
-            android:text="IMDB"/>
+            android:src="@drawable/ic_imdblogo"/>
 
-        <Button android:id="@+id/homepage_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView android:id="@+id/homepage_btn"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignTop="@id/imdb_btn"
             android:layout_toLeftOf="@id/imdb_btn"
             android:visibility="gone"
-            android:text="WWW"/>
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_website"/>
 
     </RelativeLayout>
 

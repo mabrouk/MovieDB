@@ -2,10 +2,10 @@ package com.mabrouk.moviedb.people.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,31 +90,31 @@ public class PersonDetailsActivity extends AppCompatActivity {
         View homepageButton = findViewById(R.id.homepage);
 
         ExternalIds externalIds = person.getExternalIds();
-        if(externalIds.hasFacebook()) {
+        if (externalIds.hasFacebook()) {
             facebookButton.setVisibility(View.VISIBLE);
             facebookButton.setOnClickListener(view ->
                     openExternal(externalIds.getFacebookUrl(), person.getName() + "'s Facebook"));
         }
 
-        if(externalIds.hasTwitter()) {
+        if (externalIds.hasTwitter()) {
             twitterButton.setVisibility(View.VISIBLE);
             twitterButton.setOnClickListener(view ->
                     openExternal(externalIds.getTwitterUrl(), person.getName() + "'s Twitter"));
         }
 
-        if(externalIds.hasInstagram()) {
+        if (externalIds.hasInstagram()) {
             instagramButton.setVisibility(View.VISIBLE);
             instagramButton.setOnClickListener(view ->
                     openExternal(externalIds.getInstagramUrl(), person.getName() + "'s Instagram"));
         }
 
-        if(person.hasHomepage()) {
+        if (person.hasHomepage()) {
             homepageButton.setVisibility(View.VISIBLE);
             homepageButton.setOnClickListener(view ->
                     openExternal(person.getHomepage(), person.getName() + "'s Homepage"));
         }
 
-        if(person.hasImdb()) {
+        if (person.hasImdb()) {
             imdbButton.setVisibility(View.VISIBLE);
             imdbButton.setOnClickListener(view ->
                     openExternal(person.getImbdUrl(), person.getName() + "'s IMDB"));
@@ -132,10 +132,12 @@ public class PersonDetailsActivity extends AppCompatActivity {
     static class ViewPagerAdapter extends PagerAdapter {
         LayoutInflater inflater;
         Person person;
+
         public ViewPagerAdapter(LayoutInflater inflater, Person person) {
-           this.inflater = inflater;
+            this.inflater = inflater;
             this.person = person;
         }
+
         @Override
         public int getCount() {
             return 3;
@@ -156,16 +158,16 @@ public class PersonDetailsActivity extends AppCompatActivity {
             Context context = container.getContext();
             View view;
             int padding = (int) context.getResources().getDimension(R.dimen.activity_horizontal_margin);
-            if(position == 0) {
+            if (position == 0) {
                 view = inflater.inflate(R.layout.layout_biography, container, false);
                 ((TextView) view.findViewById(R.id.biography)).setText(person.getBiography());
-            } else if(position == 2) {
+            } else if (position == 2) {
                 RecyclerView recyclerView = new RecyclerView(context);
                 GridLayoutManager layoutManager = new GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(new GalleryAdapter(person.getProfileImages()));
                 view = recyclerView;
-            }else{
+            } else {
                 StickyListHeadersListView listView = new StickyListHeadersListView(context);
                 listView.setAdapter(new PersonCreditsAdapter(person.getCreditList(), inflater));
                 view = listView;
@@ -177,9 +179,9 @@ public class PersonDetailsActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position == 0)
+            if (position == 0)
                 return "Biography";
-            else if(position == 1)
+            else if (position == 1)
                 return "Credits";
             else
                 return "Gallery";

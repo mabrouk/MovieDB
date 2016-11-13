@@ -1,6 +1,11 @@
 package com.mabrouk.moviedb.common;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
+import com.mabrouk.moviedb.configurations.ConfigurationsStore;
 
 /**
  * Created by VPN on 11/13/2016.
@@ -9,7 +14,17 @@ import android.app.Application;
 public class MovieDBApplication extends Application {
     private static MovieDBApplication instance;
 
-    public MovieDBApplication getInstance() {
+    public static void initConstants() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager manager = (WindowManager) instance.getSystemService(Context.WINDOW_SERVICE);
+        manager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        ScreenConstants.init(displayMetrics.widthPixels, displayMetrics.heightPixels,
+                displayMetrics.densityDpi, displayMetrics.density);
+    }
+
+
+    public static MovieDBApplication getInstance() {
         if (instance == null)
             throw new IllegalStateException("Application object isn't initialized properly");
         return instance;
@@ -19,5 +34,8 @@ public class MovieDBApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        ConfigurationsStore.init();
+        initConstants();
     }
 }

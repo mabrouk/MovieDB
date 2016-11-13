@@ -7,7 +7,7 @@ package com.mabrouk.moviedb.network;
 public class ApiInfo {
     public final static String API_KEY = "3240fcdfa03c4232e74da0ff1dce809e";
     public final static String BASE_URL = "https://api.themoviedb.org/3/";
-    public final static String IMAGES_BASE_URL = "http://image.tmdb.org/t/p/";
+    public static String IMAGES_BASE_URL = "http://image.tmdb.org/t/p/";
 
     public final static String POSTER_SIZE_THUMBNAIL = "w92";
     public final static String POSTER_SIZE_LARGE_THUMBNAIL = "w185";

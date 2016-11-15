@@ -23,6 +23,7 @@ public final class ConfigurationsStore {
     private static final String PREF_POSTER_CONFIG = "poster_config";
     private static final String PREF_SECURE_IMAGE_URL = "image_base_url";
     private static final String PREFERENCES_NAME = "movie_db_shared";
+    private static final String PREF_CONFIG_UPDATED_AT = "conf_updated_at";
 
     private static List<String> posterConfigurations;
     private static List<String> profileConfigurations;
@@ -84,12 +85,13 @@ public final class ConfigurationsStore {
         persist();
     }
 
-    public static void persist() {
+    private static void persist() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putStringSet(PREF_POSTER_CONFIG, new HashSet<>(posterConfigurations));
         editor.putStringSet(PREF_PROFILE_CONFIG, new HashSet<>(profileConfigurations));
         editor.putStringSet(PREF_BACKDROP_CONFIG, new HashSet<>(backdropConfigurations));
         editor.putString(PREF_SECURE_IMAGE_URL, ApiInfo.IMAGES_BASE_URL);
+        editor.putLong(PREF_CONFIG_UPDATED_AT, System.currentTimeMillis());
         editor.apply();
     }
 
@@ -103,5 +105,9 @@ public final class ConfigurationsStore {
 
     public static List<String> getBackdropConfigurations() {
         return backdropConfigurations;
+    }
+
+    public static Long getLastUpdatedTime() {
+        return sharedPreferences.getLong(PREF_CONFIG_UPDATED_AT, 0);
     }
 }

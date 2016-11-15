@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.mabrouk.moviedb.configurations.ConfigurationServiceProvider;
 import com.mabrouk.moviedb.configurations.ConfigurationsStore;
 
 /**
@@ -37,5 +38,7 @@ public class MovieDBApplication extends Application {
 
         ConfigurationsStore.init();
         initConstants();
+
+        ConfigurationServiceProvider.syncConfigurationsIfNeeded();
     }
 }

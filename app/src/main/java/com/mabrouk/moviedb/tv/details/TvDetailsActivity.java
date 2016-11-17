@@ -2,8 +2,13 @@ package com.mabrouk.moviedb.tv.details;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,13 +18,14 @@ import android.widget.TextView;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.GenresLayout;
+import com.mabrouk.moviedb.common.PaletteCreationUtils;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.movie.details.MovieCreditsAdapter;
-import com.mabrouk.moviedb.movie.details.MovieVideosFragment;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.TvServiceProvider;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,6 +46,7 @@ public class TvDetailsActivity extends AppCompatActivity {
     TextView createdBy;
     ImageView backdrop;
     GenresLayout genresLayout;
+    Toolbar toolbar;
 
     int showId;
     Tv show;
@@ -50,7 +57,7 @@ public class TvDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tv_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         showId = getIntent().getIntExtra(EXTRA_TV_ID, 0);
 
@@ -70,13 +77,22 @@ public class TvDetailsActivity extends AppCompatActivity {
 
     private void setupBasicUI() {
         setTitle(show.getName());
-        Picasso.with(this).load(show.getBackdropUrl()).into(backdrop);
         overview.setText(show.getOverview());
         firstAirDate.setText("First aired: " + show.getFirstAirDateFormatted());
         rating.setText(show.getDisplayableRating());
         RatingUtils.loadRatingDrawableIntoView(show.getRating(), rating);
         addRecommendedShowsFragment();
         addVideosFragment();
+        loadBackdrop();
+    }
+
+    private void loadBackdrop() {
+        PaletteCreationUtils.loadBackdrop(show.getBackdropUrl(), backdrop, palette -> {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                getWindow().setStatusBarColor(palette.getDarkMutedColor(0));
+            CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+            toolbarLayout.setContentScrimColor(palette.getMutedColor(0));
+        });
     }
 
     private void addRecommendedShowsFragment() {

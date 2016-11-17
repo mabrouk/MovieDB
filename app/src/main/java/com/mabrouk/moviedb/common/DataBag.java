@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.people.Person;
+import com.mabrouk.moviedb.tv.Tv;
 
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ import java.util.HashMap;
 public class DataBag {
     static Pocket<Movie> moviesPocket = new Pocket<>();
     static Pocket<Person> peoplePocket = new Pocket<>();
-
+    static Pocket<Tv> tvPocket = new Pocket<>();
 
     public static void addMovieToPocket(Movie movie) {
         moviesPocket.addObject(movie);
@@ -29,6 +30,18 @@ public class DataBag {
 
     public static void removeMovieFromPocket(int movieId) {
         moviesPocket.removeObject(movieId);
+    }
+
+    public static void addTvToPocket(Tv tv) {
+        tvPocket.addObject(tv);
+    }
+
+    public static Tv getTvFromPocket(int tvId) {
+        return tvPocket.getObject(tvId);
+    }
+
+    public static void removeTvFromPocket(int tvId) {
+        tvPocket.removeObject(tvId);
     }
 
     public static void addPersonToPocket(Person person) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.ExternalUrlUtil;
+import com.mabrouk.moviedb.common.GenresLayout;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.genres.Genre;
@@ -49,8 +50,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private Movie movie;
 
     Subscription subscription;
-    TextView genresTextView;
-    ProgressBar genresProgress;
+    GenresLayout genresLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setTitle(movieTitle);
 
         movie = DataBag.getMovieFromPocket(movieId);
-        if(movie != null) {
+        if (movie != null) {
             setBasicUI(movie);
         }
 
-        genresTextView = (TextView) findViewById(R.id.genres_textview);
-        genresProgress = (ProgressBar) findViewById(R.id.progressBar);
+        genresLayout = (GenresLayout) findViewById(R.id.genres_layout);
 
-       subscribeToService();
+        subscribeToService();
     }
 
     private void setBasicUI(Movie movie) {
@@ -82,7 +81,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Picasso.with(this).load(movie.getBackdropUrl()).into(backdropImageView);
         rating.setText(movie.getDisplayableRating());
-        RatingUtils.loadRatingDrawableIntoView(movie, rating);
+        RatingUtils.loadRatingDrawableIntoView(movie.getRating(), rating);
 
         ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
         ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getFormattedReleaseDate());
@@ -101,31 +100,31 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void gotError(Throwable e) {
         e.printStackTrace();
-        genresTextView.setVisibility(View.VISIBLE);
-        genresTextView.setText("Couldn't load genres\nTap to retry");
-        genresTextView.setOnClickListener(view -> {
-            genresTextView.setVisibility(View.GONE);
-            genresProgress.setVisibility(View.VISIBLE);
-            subscribeToService();
-        });
-        genresProgress.setVisibility(View.INVISIBLE);
+        genresLayout.setMessage("Couldn't load genres\nTap to retry");
+//        genresTextView.setVisibility(View.VISIBLE);
+//        genresTextView.setOnClickListener(view -> {
+//            genresTextView.setVisibility(View.GONE);
+//            genresProgress.setVisibility(View.VISIBLE);
+//            subscribeToService();
+//        });
+//        genresProgress.setVisibility(View.INVISIBLE);
     }
 
     private void gotMovieWithDetails(Movie movie) {
-        if(this.movie == null) {
+        if (this.movie == null) {
             this.movie = movie;
             setBasicUI(movie);
         } else {
             this.movie.populateFrom(movie);
         }
 
-        if(!movie.getImdb().isEmpty()) {
+        if (!movie.getImdb().isEmpty()) {
             View imdbButton = findViewById(R.id.imdb_btn);
             imdbButton.setVisibility(View.VISIBLE);
             imdbButton.setOnClickListener(this::openUrl);
         }
 
-        if(!movie.getWebsite().isEmpty()) {
+        if (!movie.getWebsite().isEmpty()) {
             View websiteButton = findViewById(R.id.homepage_btn);
             websiteButton.setVisibility(View.VISIBLE);
             websiteButton.setOnClickListener(this::openUrl);
@@ -135,24 +134,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void addGenres() {
-        genresProgress.setVisibility(View.GONE);
-
-        if(movie.getGenres().isEmpty()) {
-            genresTextView.setText("No genres available");
-            genresTextView.setVisibility(View.VISIBLE);
-        }else{
-            genresTextView.setVisibility(View.GONE);
-            FlowLayout layout = (FlowLayout) findViewById(R.id.flow_layout);
-            int backgroundResource = Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ? R.drawable.shape_rounded_rect
-                    : R.drawable.genre_ripple_background;
-
-            for (Genre genre : movie.getGenres()) {
-                View buttonLayout = getLayoutInflater().inflate(R.layout.button_gener, null);
-                Button button = (Button) buttonLayout.findViewById(R.id.button);
-                button.setBackgroundResource(backgroundResource);
-                button.setText(genre.getName());
-                layout.addView(buttonLayout);
-            }
+        if (movie.getGenres().isEmpty()) {
+            genresLayout.setMessage("No Genres Available");
+        } else {
+            genresLayout.setGenres(movie.getGenres());
         }
     }
 
@@ -193,7 +178,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(subscription != null)
+        if (subscription != null)
             subscription.unsubscribe();
     }
 }

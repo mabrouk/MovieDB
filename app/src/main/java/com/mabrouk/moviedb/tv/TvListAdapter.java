@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.tv;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagingAdapter;
+import com.mabrouk.moviedb.tv.details.TvDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -24,10 +26,13 @@ public class TvListAdapter extends PagingAdapter<Tv, TvListAdapter.TvViewHolder>
 
     @Override
     public void onBindViewHolder(TvViewHolder holder, Tv data) {
-        Picasso.with(applicationContext).load(data.getThumbnailUrl()).into(holder.thumbnail);
+        final Activity activity = (Activity) holder.itemView.getContext();
+        Picasso.with(activity).load(data.getThumbnailUrl()).into(holder.thumbnail);
         holder.title.setText(data.name);
         holder.overview.setText(data.overview);
         holder.rate.setText(data.getDisplayableRating());
+        holder.itemView.setOnClickListener(view ->
+                TvDetailsActivity.startInstance(data, activity));
     }
 
     @Override

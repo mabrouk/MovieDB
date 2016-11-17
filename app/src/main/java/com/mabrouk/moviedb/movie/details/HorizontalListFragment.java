@@ -44,9 +44,6 @@ public abstract class HorizontalListFragment extends Fragment{
         emptyText = (TextView) root.findViewById(R.id.empty_textview);
         errorText = (TextView) root.findViewById(R.id.error_textview);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
         downloadData();
         return root;
     }

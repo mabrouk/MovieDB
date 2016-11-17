@@ -42,7 +42,7 @@ public class RecommendedMoviesAdapter extends RecyclerView.Adapter<RecommendedMo
         holder.itemView.setTag(movie);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(movie.getDisplayableRating());
-        RatingUtils.loadRatingDrawableIntoView(movie, holder.rating);
+        RatingUtils.loadRatingDrawableIntoView(movie.getRating(), holder.rating);
         Picasso.with(holder.itemView.getContext()).load(movie.getLargeThumbnailUrl()).into(holder.thumbnail);
     }
 

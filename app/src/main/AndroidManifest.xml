@@ -30,6 +30,11 @@
         <activity
             android:name=".people.details.PersonDetailsActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".tv.details.TvDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

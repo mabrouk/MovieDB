@@ -14,12 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TvListFragmentFactory {
     public final static int SECTIONS_COUNT = 3;
-    private static TvService tvServiceService = new Retrofit.Builder()
-            .baseUrl(ApiInfo.BASE_URL)
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(TvService.class);
 
     private TvListFragment popularTvFragment;
     private TvListFragment topRatedTvFragment;
@@ -46,7 +40,7 @@ public class TvListFragmentFactory {
     private TvListFragment getPopularTvFragment() {
         if(popularTvFragment == null) {
             popularTvFragment = new TvListFragment();
-            popularTvFragment.setPagesLoader(new PagesLoader(tvServiceService::getPopularTv));
+            popularTvFragment.setPagesLoader(new PagesLoader(TvServiceProvider.getService()::getPopularTv));
         }
         return popularTvFragment;
     }
@@ -54,7 +48,7 @@ public class TvListFragmentFactory {
     private TvListFragment getAiringTvFragment() {
         if(airingTvFragment == null) {
             airingTvFragment = new TvListFragment();
-            airingTvFragment.setPagesLoader(new PagesLoader(tvServiceService::getAiringTv));
+            airingTvFragment.setPagesLoader(new PagesLoader(TvServiceProvider.getService()::getAiringTv));
         }
         return airingTvFragment;
     }
@@ -62,7 +56,7 @@ public class TvListFragmentFactory {
     private TvListFragment getTopRatedTvFragment() {
         if(topRatedTvFragment== null) {
             topRatedTvFragment = new TvListFragment();
-            topRatedTvFragment.setPagesLoader(new PagesLoader(tvServiceService::getTopRatedTv));
+            topRatedTvFragment.setPagesLoader(new PagesLoader(TvServiceProvider.getService()::getTopRatedTv));
         }
         return topRatedTvFragment;
     }

@@ -13,8 +13,7 @@ import com.mabrouk.moviedb.movie.Movie;
  */
 
 public class RatingUtils {
-    public static void loadRatingDrawableIntoView(Movie movie, View view) {
-        double rating = movie.getRating();
+    public static void loadRatingDrawableIntoView(double rating, View view) {
         int drawableRes;
         if(rating <= 5)
             drawableRes = R.drawable.shape_red_circle;

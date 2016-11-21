@@ -2,8 +2,6 @@ package com.mabrouk.moviedb.tv.details;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -24,8 +22,8 @@ import com.mabrouk.moviedb.movie.details.MovieCreditsAdapter;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.TvServiceProvider;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.mabrouk.moviedb.tv.season.Season;
+import com.mabrouk.moviedb.tv.season.SeasonActivity;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,6 +50,9 @@ public class TvDetailsActivity extends AppCompatActivity {
     Tv show;
     Subscription subscription;
 
+    int primaryColor;
+    int darkPrimaryColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +73,10 @@ public class TvDetailsActivity extends AppCompatActivity {
         createdBy = (TextView) findViewById(R.id.created_by);
         backdrop = (ImageView) findViewById(R.id.backdrop);
         genresLayout = (GenresLayout) findViewById(R.id.genres_layout);
+
+        primaryColor = getResources().getColor(R.color.colorPrimary);
+        darkPrimaryColor = getResources().getColor(R.color.colorPrimaryDark);
+
         setupBasicUI();
     }
 
@@ -88,11 +93,17 @@ public class TvDetailsActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         PaletteCreationUtils.loadBackdrop(show.getBackdropUrl(), backdrop, palette -> {
+            darkPrimaryColor = palette.getDarkMutedColor(darkPrimaryColor);
+            primaryColor = palette.getMutedColor(primaryColor);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                getWindow().setStatusBarColor(palette.getDarkMutedColor(0));
+                getWindow().setStatusBarColor(darkPrimaryColor);
             CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-            toolbarLayout.setContentScrimColor(palette.getMutedColor(0));
+            toolbarLayout.setContentScrimColor(primaryColor);
         });
+    }
+
+    public void onSeasonClicked(Season season) {
+        SeasonActivity.startInstance(this, season.getSeasonNumber(), show, primaryColor, darkPrimaryColor);
     }
 
     private void addRecommendedShowsFragment() {
@@ -157,4 +168,9 @@ public class TvDetailsActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataBag.removeTvFromPocket(showId);
+    }
 }

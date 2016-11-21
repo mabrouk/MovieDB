@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.season.Season;
 
 import java.util.List;

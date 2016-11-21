@@ -3,6 +3,7 @@ package com.mabrouk.moviedb.tv;
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.details.MovieVideo;
 import com.mabrouk.moviedb.network.ApiInfo;
+import com.mabrouk.moviedb.tv.season.Season;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -31,4 +32,7 @@ public interface TvService {
 
     @GET("tv/{tv_id}/videos?api_key=" + ApiInfo.API_KEY)
     Observable<MovieVideo.VideoList> getVideos(@Path("tv_id") int tvId);
+
+    @GET("tv/{tv_id}/season/{season_number}?api_key=" + ApiInfo.API_KEY)
+    Observable<Season> getSeason(@Path("tv_id") int tvId, @Path("season_number") int seasonNumber);
 }

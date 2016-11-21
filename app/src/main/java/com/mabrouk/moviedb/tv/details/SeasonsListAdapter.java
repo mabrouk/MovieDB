@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.tv.details;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.season.Season;
+import com.mabrouk.moviedb.tv.season.SeasonActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,6 +37,9 @@ public class SeasonsListAdapter extends RecyclerView.Adapter<SeasonsListAdapter.
         Season season = seasons.get(position);
         holder.seasonInfo.setText(String.format("Season %d (%d episodes)", season.getSeasonNumber(), season.getEpisodeCount()));
         Picasso.with(holder.itemView.getContext()).load(season.getPosterThum()).into(holder.posterThum);
+        holder.itemView.setOnClickListener( view ->
+                ((TvDetailsActivity) view.getContext()).onSeasonClicked(season)
+        );
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.mabrouk.moviedb.configurations;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,16 +9,26 @@ import java.util.List;
  */
 
 public class ConfigurationSelector {
-    List<Configuration> configurations;
+    private List<Configuration> configurations;
 
     public ConfigurationSelector(List<String> rawConfigs) {
-        int size = rawConfigs.size() - 1;   //ignoring the last item, which is "original"
-        configurations = new ArrayList<>(size);
+        int size = rawConfigs.size();
+        configurations = new ArrayList<>(size - 1);
 
         for(int i = 0; i <  size; i++) {
             String string = rawConfigs.get(i);
+            if(string.equals("original"))
+                continue;
             configurations.add(new Configuration(string));
         }
+        Collections.sort(configurations, (c1, c2) -> {
+            if(c1.value < c2.value)
+                return -1;
+            else if(c1.value < c2.value)
+                return 1;
+            else return 0;
+        });
+        System.out.print("");
     }
 
     /**

@@ -17,7 +17,7 @@ import com.mabrouk.moviedb.common.GenresLayout;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.movie.api.ServiceProvider;
+import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;
 
@@ -91,7 +91,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void subscribeToService() {
-        subscription = ServiceProvider.getService().getMovieDetails(movieId)
+        subscription = MovieServiceProvider.getService().getMovieDetails(movieId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::gotMovieWithDetails, this::gotError);

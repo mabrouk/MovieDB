@@ -75,10 +75,6 @@ public class Movie extends BaseModel {
         return overview;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
     public String getFormattedReleaseDate() {
         return DateUtils.formatDateString(releaseDate);
     }

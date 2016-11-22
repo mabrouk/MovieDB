@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.movie.api.ServiceProvider;
+import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class RecommendedMoviesFragment extends HorizontalListFragment {
 
     @Override
     protected void subscribeToService() {
-        subscription = ServiceProvider.getService().getMovieRecommendations(movie.getId())
+        subscription = MovieServiceProvider.getService().getMovieRecommendations(movie.getId())
                 .map(ResultList::getResults)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

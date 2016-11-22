@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by User on 11/7/2016.
  */
 
-public class ServiceProvider {
+public class PeopleServiceProvider {
     private static PeopleService service = new Retrofit.Builder().baseUrl(ApiInfo.BASE_URL)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())

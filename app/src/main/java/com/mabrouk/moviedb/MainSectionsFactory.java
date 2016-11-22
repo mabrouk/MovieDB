@@ -6,6 +6,7 @@ import com.mabrouk.moviedb.common.PagesLoader;
 import com.mabrouk.moviedb.movie.MoviesMainFragment;
 import com.mabrouk.moviedb.network.ApiInfo;
 import com.mabrouk.moviedb.people.PeopleListFragment;
+import com.mabrouk.moviedb.people.PeopleMainFragment;
 import com.mabrouk.moviedb.people.PeopleService;
 import com.mabrouk.moviedb.tv.TvMainFragment;
 
@@ -19,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainSectionsFactory {
     private MoviesMainFragment moviesMainFragment = new MoviesMainFragment();
-    private PeopleListFragment peopleListFragment;
+    private PeopleMainFragment peopleMainFragment = new PeopleMainFragment();
     private TvMainFragment tvMainFragment = new TvMainFragment();
 
     public Fragment fragmentForPage(int pageIndex) {
@@ -29,21 +30,10 @@ public class MainSectionsFactory {
             case 1:
                 return tvMainFragment;
             case 2:
-                return getPeopleListFragment();
+                return peopleMainFragment;
             default:
-                return new Fragment();
+                //won't happen
+                throw new IllegalStateException("WTF");
         }
-    }
-
-    private PeopleListFragment getPeopleListFragment() {
-        if(peopleListFragment == null) {
-            PeopleService service = new Retrofit.Builder().baseUrl(ApiInfo.BASE_URL)
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(PeopleService.class);
-            peopleListFragment = new PeopleListFragment();
-            peopleListFragment.setPagesLoader(new PagesLoader<>(service::getPopularPeople));
-        }
-        return peopleListFragment;
     }
 }

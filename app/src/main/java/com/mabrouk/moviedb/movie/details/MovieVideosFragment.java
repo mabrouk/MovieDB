@@ -3,7 +3,7 @@ package com.mabrouk.moviedb.movie.details;
 import android.view.View;
 
 import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.movie.api.ServiceProvider;
+import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class MovieVideosFragment extends HorizontalListFragment {
 
     @Override
     protected void subscribeToService() {
-        subscription = ServiceProvider.getService().getMovieVideos(movie.getId())
+        subscription = MovieServiceProvider.getService().getMovieVideos(movie.getId())
                 .map(MovieVideo.VideoList::getResults)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

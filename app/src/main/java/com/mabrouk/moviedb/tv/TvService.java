@@ -24,6 +24,9 @@ public interface TvService {
     @GET("tv/on_the_air?api_key=" + ApiInfo.API_KEY)
     Observable<ResultList<Tv>> getAiringTv(@Query("page") int page);
 
+    @GET("search/tv?api_key=" + ApiInfo.API_KEY)
+    Observable<ResultList<Tv>> search(@Query("query") String query, @Query("page") int page);
+
     @GET("tv/{tv_id}?api_key=" + ApiInfo.API_KEY + "&append_to_response=credits")
     Observable<Tv> getTvDetails(@Path("tv_id") int tvId);
 

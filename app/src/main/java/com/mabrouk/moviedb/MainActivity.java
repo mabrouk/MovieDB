@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setAdapter(new DrawerListAdapter(sections));
         drawerList.setOnItemClickListener((parent, view, position, id) -> selectSection(position));
 
-        selectSection(1);
+        selectSection(0);
     }
 
     private void selectSection(int position) {
@@ -38,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, factory.fragmentForPage(position))
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     static class DrawerListAdapter extends BaseAdapter {

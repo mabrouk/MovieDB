@@ -21,7 +21,7 @@ import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
-import com.mabrouk.moviedb.people.ServiceProvider;
+import com.mabrouk.moviedb.people.PeopleServiceProvider;
 import com.squareup.picasso.Picasso;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,7 +71,7 @@ public class PersonDetailsActivity extends AppCompatActivity {
 
         Picasso.with(this).load(profileUrl).into(profilePic);
 
-        ServiceProvider.getService().getPersonDetails(personId)
+        PeopleServiceProvider.getService().getPersonDetails(personId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::gotPerson, this::gotError);

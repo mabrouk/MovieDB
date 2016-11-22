@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.mabrouk.moviedb.movie.MovieListFragment"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:background="@color/background_color">
+    android:paddingLeft="@dimen/activity_horizontal_margin">
 
     <android.support.v7.widget.RecyclerView android:id="@+id/movies_list"
         android:layout_width="match_parent"

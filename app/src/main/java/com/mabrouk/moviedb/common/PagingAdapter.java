@@ -50,4 +50,9 @@ public abstract class PagingAdapter<T extends BaseModel,VH extends RecyclerView.
     public long getItemId(int position) {
         return list.get(position).getId();
     }
+
+    public void clear() {
+        list.clear();
+        notifyDataSetChanged();
+    }
 }

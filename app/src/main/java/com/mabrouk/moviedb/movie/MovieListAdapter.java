@@ -45,7 +45,7 @@ public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.Movi
         holder.itemView.setTag(movie);
 
         holder.title.setText(movie.getTitle());
-        holder.releaseDate.setText(movie.getReleaseDate());
+        holder.releaseDate.setText(movie.getFormattedReleaseDate());
         holder.overview.setText(movie.getOverview());
         String thumbUrl = new MediaUrlBuilder(movie.getPosterPath())
                 .addSize(thumbWidth, thumbHeight)

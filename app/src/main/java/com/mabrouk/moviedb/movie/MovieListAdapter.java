@@ -13,6 +13,7 @@ import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.PagingAdapter;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.movie.details.MovieDetailsActivity;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -20,9 +21,11 @@ import com.squareup.picasso.Picasso;
  */
 
 public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.MovieViewHolder> {
-
+    int thumbWidth, thumbHeight;
     public MovieListAdapter(Context context) {
         super(context);
+        thumbHeight = (int) context.getResources().getDimension(R.dimen.movie_thumb_height);
+        thumbWidth = (int) context.getResources().getDimension(R.dimen.movie_thumb_width);
     }
 
     @Override
@@ -44,7 +47,11 @@ public class MovieListAdapter extends PagingAdapter<Movie, MovieListAdapter.Movi
         holder.title.setText(movie.getTitle());
         holder.releaseDate.setText(movie.getReleaseDate());
         holder.overview.setText(movie.getOverview());
-        Picasso.with(holder.itemView.getContext()).load(movie.getThumbnailUrl()).into(holder.thumbnail);
+        String thumbUrl = new MediaUrlBuilder(movie.getPosterPath())
+                .addSize(thumbWidth, thumbHeight)
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .build();
+        Picasso.with(holder.itemView.getContext()).load(thumbUrl).into(holder.thumbnail);
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {

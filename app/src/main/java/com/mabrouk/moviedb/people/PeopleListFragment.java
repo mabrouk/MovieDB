@@ -19,6 +19,6 @@ public class PeopleListFragment extends ListFragment<Person> {
 
     @Override
     protected PagingAdapter<Person, ?> initAdapter(Context context) {
-        return new PeopleListAdapter(context);
+        return new PeopleListAdapter(context, getResources());
     }
 }

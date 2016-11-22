@@ -1,12 +1,8 @@
 package com.mabrouk.moviedb.common;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.View;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.movie.Movie;
 
 /**
  * Created by VPN on 11/6/2016.

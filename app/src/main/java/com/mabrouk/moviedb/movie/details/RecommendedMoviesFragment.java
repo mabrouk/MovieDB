@@ -41,7 +41,7 @@ public class RecommendedMoviesFragment extends HorizontalListFragment {
 
     private void gotRecommendedMovies(List<Movie> movies) {
         progressBar.setVisibility(View.GONE);
-        recyclerView.setAdapter(new RecommendedMoviesAdapter(movies));
+        recyclerView.setAdapter(new RecommendedMoviesAdapter(movies, getResources()));
     }
 
 

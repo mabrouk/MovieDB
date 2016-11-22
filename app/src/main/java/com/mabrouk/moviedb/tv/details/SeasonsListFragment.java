@@ -32,7 +32,7 @@ public class SeasonsListFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_movie_details_horizontal_list, null);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         root.findViewById(R.id.progressBar).setVisibility(View.GONE);
-        recyclerView.setAdapter(new SeasonsListAdapter(seasons));
+        recyclerView.setAdapter(new SeasonsListAdapter(seasons, getResources()));
         return root;
     }
 }

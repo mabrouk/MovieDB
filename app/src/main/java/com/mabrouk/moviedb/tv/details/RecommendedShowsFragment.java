@@ -31,7 +31,7 @@ public class RecommendedShowsFragment extends HorizontalListFragment {
                 .map(ResultList::getResults)
                 .subscribe(shows -> {
                     progressBar.setVisibility(View.GONE);
-                    recyclerView.setAdapter(new RecommendedTvAdapter(shows));
+                    recyclerView.setAdapter(new RecommendedTvAdapter(shows, getResources()));
                 });
     }
 

@@ -83,16 +83,12 @@ public class Movie extends BaseModel {
         return DateUtils.formatDateString(releaseDate);
     }
 
-    public String getThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_THUMBNAIL + posterPath;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public String getLargeThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE_THUMBNAIL + posterPath;
-    }
-
-    public String getBackdropUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.BACKDROP_SIZE_XHIGH + backdropPath;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
     public String getDisplayableRating() {

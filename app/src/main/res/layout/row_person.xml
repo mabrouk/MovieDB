@@ -14,8 +14,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/thumbnail"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="@dimen/person_thumb_dimen"
+            android:layout_height="@dimen/person_thumb_dimen"
             app:civ_border_color="#ddd"
             app:civ_border_width="2dp"
             android:layout_alignParentLeft="true"

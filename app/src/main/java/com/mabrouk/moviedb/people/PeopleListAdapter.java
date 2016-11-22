@@ -1,6 +1,7 @@
 package com.mabrouk.moviedb.people;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagingAdapter;
 import com.mabrouk.moviedb.movie.Movie;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.details.PersonDetailsActivity;
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +23,10 @@ import java.util.List;
  */
 
 public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.PersonViewHolder> {
-
-    public PeopleListAdapter(Context context) {
+    int profileDimen;
+    public PeopleListAdapter(Context context, Resources resources) {
         super(context);
+        profileDimen = (int) resources.getDimension(R.dimen.person_thumb_dimen);
     }
 
     @Override
@@ -51,7 +54,11 @@ public class PeopleListAdapter extends PagingAdapter<Person, PeopleListAdapter.P
                 builder.append(", ");
         }
         holder.knownFor.setText(builder.toString());
-        Picasso.with(applicationContext).load(data.getThumbnail()).into(holder.thumbnail);
+        String profileImageUrl = new MediaUrlBuilder(data.getProfilePath())
+                .addType(MediaUrlBuilder.TYPE_PROFILE)
+                .addSize(profileDimen, profileDimen)
+                .build();
+        Picasso.with(applicationContext).load(profileImageUrl).into(holder.thumbnail);
     }
 
     static class PersonViewHolder extends RecyclerView.ViewHolder{

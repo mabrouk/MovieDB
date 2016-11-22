@@ -2,11 +2,6 @@ package com.mabrouk.moviedb.tv;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagesLoader;
-import com.mabrouk.moviedb.network.ApiInfo;
-
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by VPN on 11/3/2016.

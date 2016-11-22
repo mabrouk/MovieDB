@@ -41,10 +41,6 @@ public class Tv extends BaseModel {
 
     MovieCredits credits;
 
-    public String getBackdropUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.BACKDROP_SIZE_XHIGH + backdropPath;
-    }
-
     public double getRating() {
         return rating;
     }
@@ -73,12 +69,12 @@ public class Tv extends BaseModel {
         return name;
     }
 
-    public String getThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_THUMBNAIL + posterPath;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public String getLargeThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE_THUMBNAIL + posterPath;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
     public List<Season> getSeasons() {

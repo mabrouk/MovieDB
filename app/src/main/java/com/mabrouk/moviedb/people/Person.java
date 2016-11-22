@@ -49,8 +49,8 @@ public class Person extends BaseModel {
         return imbdId != null && imbdId.length() > 0;
     }
 
-    public String getThumbnail() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.PROFILE_SIZE_LARGE + profilePath;
+    public String getProfilePath() {
+        return profilePath;
     }
 
     public String getName() {

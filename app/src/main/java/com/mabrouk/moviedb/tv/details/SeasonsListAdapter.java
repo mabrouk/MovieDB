@@ -1,6 +1,6 @@
 package com.mabrouk.moviedb.tv.details;
 
-import android.app.Activity;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.tv.Tv;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.tv.season.Season;
-import com.mabrouk.moviedb.tv.season.SeasonActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,8 +21,11 @@ import java.util.List;
 
 public class SeasonsListAdapter extends RecyclerView.Adapter<SeasonsListAdapter.SeasonsListViewHolder>{
     List<Season> seasons;
-    public SeasonsListAdapter(List<Season> seasons) {
+    int posterWidth, posterHeight;
+    public SeasonsListAdapter(List<Season> seasons, Resources resources) {
         this.seasons = seasons;
+        posterHeight = (int) resources.getDimension(R.dimen.season_cell_height);
+        posterWidth = (int) resources.getDimension(R.dimen.season_cell_width);
     }
 
     @Override
@@ -35,8 +37,13 @@ public class SeasonsListAdapter extends RecyclerView.Adapter<SeasonsListAdapter.
     @Override
     public void onBindViewHolder(SeasonsListViewHolder holder, int position) {
         Season season = seasons.get(position);
+        String posterUrl = new MediaUrlBuilder(season.getPosterPath())
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .addSize(posterWidth, posterHeight)
+                .build();
+
         holder.seasonInfo.setText(String.format("Season %d (%d episodes)", season.getSeasonNumber(), season.getEpisodeCount()));
-        Picasso.with(holder.itemView.getContext()).load(season.getPosterThum()).into(holder.posterThum);
+        Picasso.with(holder.itemView.getContext()).load(posterUrl).into(holder.posterThum);
         holder.itemView.setOnClickListener( view ->
                 ((TvDetailsActivity) view.getContext()).onSeasonClicked(season)
         );

@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_width="@dimen/season_cell_width"
+        android:layout_height="@dimen/season_cell_height"
         android:scaleType="centerCrop" />
 
     <TextView

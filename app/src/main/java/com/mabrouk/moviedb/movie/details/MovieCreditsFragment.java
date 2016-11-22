@@ -27,7 +27,7 @@ public class MovieCreditsFragment extends HorizontalListFragment {
     }
 
     private void gotCredits(MovieCredits credits) {
-        recyclerView.setAdapter(new MovieCreditsAdapter(credits));
+        recyclerView.setAdapter(new MovieCreditsAdapter(credits, getResources()));
         progressBar.setVisibility(View.GONE);
     }
 

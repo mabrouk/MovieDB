@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagingAdapter;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.tv.details.TvDetailsActivity;
 import com.squareup.picasso.Picasso;
 
@@ -19,15 +20,22 @@ import com.squareup.picasso.Picasso;
  */
 
 public class TvListAdapter extends PagingAdapter<Tv, TvListAdapter.TvViewHolder> {
+    int thumbWidth, thumbHeight;
 
     public TvListAdapter(Context context) {
         super(context);
+        thumbHeight = (int) context.getResources().getDimension(R.dimen.tv_row_thum_height);
+        thumbWidth = (int) context.getResources().getDimension(R.dimen.tv_row_thum_width);
     }
 
     @Override
     public void onBindViewHolder(TvViewHolder holder, Tv data) {
         final Activity activity = (Activity) holder.itemView.getContext();
-        Picasso.with(activity).load(data.getThumbnailUrl()).into(holder.thumbnail);
+        String posterUrl = new MediaUrlBuilder(data.getPosterPath())
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .addSize(thumbWidth, thumbHeight)
+                .build();
+        Picasso.with(activity).load(posterUrl).into(holder.thumbnail);
         holder.title.setText(data.name);
         holder.overview.setText(data.overview);
         holder.rate.setText(data.getDisplayableRating());

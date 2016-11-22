@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.WebviewActivity;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.people.ServiceProvider;
 import com.squareup.picasso.Picasso;
@@ -62,7 +63,13 @@ public class PersonDetailsActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         name.setText(person.getName());
-        Picasso.with(this).load(person.getThumbnail()).into(profilePic);
+        int profileDimen = (int) getResources().getDimension(R.dimen.person_large_thumb_dimen);
+        String profileUrl = new MediaUrlBuilder(person.getProfilePath())
+                .addType(MediaUrlBuilder.TYPE_PROFILE)
+                .addSize(profileDimen, profileDimen)
+                .build();
+
+        Picasso.with(this).load(profileUrl).into(profilePic);
 
         ServiceProvider.getService().getPersonDetails(personId)
                 .subscribeOn(Schedulers.io())

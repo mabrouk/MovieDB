@@ -19,6 +19,7 @@ import com.mabrouk.moviedb.common.GenresLayout;
 import com.mabrouk.moviedb.common.PaletteCreationUtils;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.movie.details.MovieCreditsAdapter;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.TvServiceProvider;
@@ -92,7 +93,11 @@ public class TvDetailsActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-        PaletteCreationUtils.loadBackdrop(show.getBackdropUrl(), backdrop, palette -> {
+        String backdropUrl = new MediaUrlBuilder(show.getBackdropPath())
+                .addType(MediaUrlBuilder.TYPE_BACKDROP)
+                .build();
+
+        PaletteCreationUtils.loadBackdrop(backdropUrl, backdrop, palette -> {
             darkPrimaryColor = palette.getDarkMutedColor(darkPrimaryColor);
             primaryColor = palette.getMutedColor(primaryColor);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -150,7 +155,7 @@ public class TvDetailsActivity extends AppCompatActivity {
     private void displayCast() {
         View castLayout = findViewById(R.id.cast_layout);
         RecyclerView recyclerView = (RecyclerView) castLayout.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new MovieCreditsAdapter(show.getCredits()));
+        recyclerView.setAdapter(new MovieCreditsAdapter(show.getCredits(), getResources()));
         castLayout.findViewById(R.id.progressBar).setVisibility(View.GONE);
     }
 

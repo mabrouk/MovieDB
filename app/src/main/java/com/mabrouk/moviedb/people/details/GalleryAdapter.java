@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.common.ScreenConstants;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>{
     List<ProfileImage> images;
-
+    int height;
     public GalleryAdapter(List<ProfileImage> images) {
         this.images = images;
     }
@@ -25,7 +27,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     public GalleryAdapter.GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ImageView imageView = new ImageView(parent.getContext());
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        int height = (int) parent.getContext().getResources().getDimension(R.dimen.gallery_image_height);
+        height = (int) parent.getContext().getResources().getDimension(R.dimen.gallery_image_height);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height));
         return new GalleryViewHolder(imageView);
     }
@@ -34,7 +36,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     public void onBindViewHolder(GalleryAdapter.GalleryViewHolder holder, int position) {
         ImageView imageView = (ImageView) holder.itemView;
         ProfileImage image = images.get(position);
-        Picasso.with(imageView.getContext()).load(images.get(position).getThumbnailUrl()).into(imageView);
+        String profileImageUrl = new MediaUrlBuilder(image.filePath)
+                .addType(MediaUrlBuilder.TYPE_PROFILE)
+                .addSize(ScreenConstants.getScreenWidth() / 2, height)
+                .build();
+        Picasso.with(imageView.getContext()).load(profileImageUrl).into(imageView);
     }
 
     @Override

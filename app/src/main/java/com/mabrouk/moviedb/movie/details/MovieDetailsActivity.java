@@ -2,15 +2,12 @@ package com.mabrouk.moviedb.movie.details;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
@@ -19,12 +16,10 @@ import com.mabrouk.moviedb.common.ExternalUrlUtil;
 import com.mabrouk.moviedb.common.GenresLayout;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.common.WebviewActivity;
-import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.movie.api.ServiceProvider;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;
-
-import org.apmem.tools.layouts.FlowLayout;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -79,7 +74,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
         TextView rating = (TextView) findViewById(R.id.rating);
 
-        Picasso.with(this).load(movie.getBackdropUrl()).into(backdropImageView);
+        String backdropUrl = new MediaUrlBuilder(movie.getBackdropPath())
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .build();
+
+        Picasso.with(this).load(backdropUrl).into(backdropImageView);
         rating.setText(movie.getDisplayableRating());
         RatingUtils.loadRatingDrawableIntoView(movie.getRating(), rating);
 

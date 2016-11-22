@@ -35,12 +35,8 @@ public class Season extends BaseModel {
         return episodeCount;
     }
 
-    public String getPosterLargeUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE + posterPath;
-    }
-
-    public String getPosterThum() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE_THUMBNAIL + posterPath;
+    public String getPosterPath() {
+        return posterPath;
     }
 
     public String getName() {

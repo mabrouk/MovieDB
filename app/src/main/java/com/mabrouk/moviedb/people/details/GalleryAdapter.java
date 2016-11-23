@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.people.details;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +36,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     @Override
     public void onBindViewHolder(GalleryAdapter.GalleryViewHolder holder, int position) {
         ImageView imageView = (ImageView) holder.itemView;
-        ProfileImage image = images.get(position);
-        String profileImageUrl = new MediaUrlBuilder(image.filePath)
+        final ProfileImage image = images.get(position);
+        final String profileImageUrl = new MediaUrlBuilder(image.filePath)
                 .addType(MediaUrlBuilder.TYPE_PROFILE)
                 .addSize(ScreenConstants.getScreenWidth() / 2, height)
                 .build();
         Picasso.with(imageView.getContext()).load(profileImageUrl).into(imageView);
+        imageView.setOnClickListener(view->
+                GalleryActivity.startInstance((Activity) view.getContext(), image, profileImageUrl));
     }
 
     @Override

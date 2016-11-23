@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
 
 public class PagesLoader<RD extends BaseModel> {
     int pageToGet = 1;
-    //initialy 1, cos at least we have one page to load
+    //initially 1, cos at least we have one page to load
     int totalPages = 1;
 
     PageLoadingOperation<ResultList<RD>> operation;
@@ -53,7 +53,7 @@ public class PagesLoader<RD extends BaseModel> {
     }
 
     private List<RD> map(ResultList<RD> list) {
-        totalPages = list.totalPages;
+        totalPages = list.getTotalPages();
         return list.getResults();
     }
 

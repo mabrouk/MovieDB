@@ -6,16 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
-import com.mabrouk.moviedb.common.ExternalUrlUtil;
 import com.mabrouk.moviedb.common.GenresLayout;
 import com.mabrouk.moviedb.common.RatingUtils;
-import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
@@ -100,13 +97,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void gotError(Throwable e) {
         e.printStackTrace();
         genresLayout.setMessage("Couldn't load genres\nTap to retry");
-//        genresTextView.setVisibility(View.VISIBLE);
-//        genresTextView.setOnClickListener(view -> {
-//            genresTextView.setVisibility(View.GONE);
-//            genresProgress.setVisibility(View.VISIBLE);
-//            subscribeToService();
-//        });
-//        genresProgress.setVisibility(View.INVISIBLE);
     }
 
     private void gotMovieWithDetails(Movie movie) {
@@ -115,18 +105,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
             setBasicUI(movie);
         } else {
             this.movie.populateFrom(movie);
-        }
-
-        if (!movie.getImdb().isEmpty()) {
-            View imdbButton = findViewById(R.id.imdb_btn);
-            imdbButton.setVisibility(View.VISIBLE);
-            imdbButton.setOnClickListener(this::openUrl);
-        }
-
-        if (!movie.getWebsite().isEmpty()) {
-            View websiteButton = findViewById(R.id.homepage_btn);
-            websiteButton.setVisibility(View.VISIBLE);
-            websiteButton.setOnClickListener(this::openUrl);
         }
 
         addGenres();
@@ -160,12 +138,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.layout_recommended_movies, fragment)
                 .commit();
-    }
-
-    private void openUrl(View v) {
-        String url = v.getId() == R.id.homepage_btn ? movie.getWebsite()
-                : ExternalUrlUtil.IMDBUrlForTitle(movie.getImdb());
-        WebviewActivity.startInstance(this, url, movie.getTitle());
     }
 
     @Override

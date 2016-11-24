@@ -2,7 +2,9 @@ package com.mabrouk.moviedb.movie.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +14,11 @@ import android.widget.TextView;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.GenresLayout;
+import com.mabrouk.moviedb.common.PaletteCreationUtils;
 import com.mabrouk.moviedb.common.RatingUtils;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
-import com.squareup.picasso.Picasso;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -68,23 +70,34 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     private void setBasicUI(Movie movie) {
-        ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
         TextView rating = (TextView) findViewById(R.id.rating);
 
-        String backdropUrl = new MediaUrlBuilder(movie.getBackdropPath())
-                .addType(MediaUrlBuilder.TYPE_POSTER)
-                .build();
-
-        Picasso.with(this).load(backdropUrl).into(backdropImageView);
         rating.setText(movie.getDisplayableRating());
         RatingUtils.loadRatingDrawableIntoView(movie.getRating(), rating);
 
         ((TextView) findViewById(R.id.overview)).setText(movie.getOverview());
         ((TextView) findViewById(R.id.release_date)).setText("Release Date: " + movie.getFormattedReleaseDate());
 
+        loadBackdropPalette();
+
         addVideosFragment();
         addCreditsFragment();
         addRecommendedMoviesFragment();
+    }
+
+    void loadBackdropPalette() {
+        ImageView backdropImageView = (ImageView) findViewById(R.id.backdrop);
+        String backdropUrl = new MediaUrlBuilder(movie.getBackdropPath())
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .build();
+
+        PaletteCreationUtils.loadBackdrop(backdropUrl, backdropImageView, palette -> {
+            int colorPrimary = palette.getMutedColor(getResources().getColor(R.color.colorPrimary));
+            int colorPrimaryDark = palette.getDarkMutedColor(getResources().getColor(R.color.colorPrimaryDark));
+            ((CollapsingToolbarLayout) findViewById(R.id.toolbar_layout)).setContentScrimColor(colorPrimary);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                getWindow().setStatusBarColor(colorPrimaryDark);
+        });
     }
 
     private void subscribeToService() {

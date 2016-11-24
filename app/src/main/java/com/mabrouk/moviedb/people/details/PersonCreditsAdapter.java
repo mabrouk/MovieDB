@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.people.details;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.movie.details.MovieDetailsActivity;
+import com.mabrouk.moviedb.tv.details.TvDetailsActivity;
 
 import java.util.List;
 
@@ -88,6 +90,8 @@ public class PersonCreditsAdapter extends BaseAdapter implements StickyListHeade
     private void viewClicked(View view, PersonCredit credit) {
         if(credit.isMovieCredit()) {
             MovieDetailsActivity.startMovieDetailsActivity(view.getContext(), credit.getId(), credit.getTitle());
+        }else{
+            TvDetailsActivity.startInstance(credit.getId(), credit.getTitle(), (Activity) view.getContext());
         }
     }
 

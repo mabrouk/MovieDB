@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -32,10 +31,17 @@ import rx.schedulers.Schedulers;
 
 public class TvDetailsActivity extends AppCompatActivity {
     private static final String EXTRA_TV_ID = "tv_id";
+    private static final String EXTRA_TITLE = "title";
+
     public static void startInstance(Tv tv, Activity activity) {
-        Intent intent = new Intent(activity, TvDetailsActivity.class);
-        intent.putExtra(EXTRA_TV_ID, tv.getId());
         DataBag.addTvToPocket(tv);
+        startInstance(tv.getId(), tv.getName(), activity);
+    }
+
+    public static void startInstance(int tvId, String title, Activity activity) {
+        Intent intent = new Intent(activity, TvDetailsActivity.class);
+        intent.putExtra(EXTRA_TV_ID, tvId);
+        intent.putExtra(EXTRA_TITLE, title);
         activity.startActivity(intent);
     }
 
@@ -61,6 +67,8 @@ public class TvDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tv_details);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(getIntent().getStringExtra(EXTRA_TITLE));
+
         showId = getIntent().getIntExtra(EXTRA_TV_ID, 0);
 
         show = DataBag.getTvFromPocket(showId);
@@ -78,11 +86,11 @@ public class TvDetailsActivity extends AppCompatActivity {
         primaryColor = getResources().getColor(R.color.colorPrimary);
         darkPrimaryColor = getResources().getColor(R.color.colorPrimaryDark);
 
-        setupBasicUI();
+        if(show != null)
+            setupBasicUI();
     }
 
     private void setupBasicUI() {
-        setTitle(show.getName());
         overview.setText(show.getOverview());
         firstAirDate.setText("First aired: " + show.getFirstAirDateFormatted());
         rating.setText(show.getDisplayableRating());

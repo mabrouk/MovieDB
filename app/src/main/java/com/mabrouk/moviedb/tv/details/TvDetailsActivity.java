@@ -184,6 +184,12 @@ public class TvDetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        subscription.unsubscribe();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         DataBag.removeTvFromPocket(showId);
     }
 }

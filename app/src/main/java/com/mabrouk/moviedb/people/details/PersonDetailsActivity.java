@@ -24,6 +24,7 @@ import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.people.PeopleServiceProvider;
 import com.squareup.picasso.Picasso;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -47,6 +48,7 @@ public class PersonDetailsActivity extends AppCompatActivity {
     TextView birthDate;
     ViewPager viewPager;
 
+    Subscription subscription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,7 @@ public class PersonDetailsActivity extends AppCompatActivity {
 
         Picasso.with(this).load(profileUrl).into(profilePic);
 
-        PeopleServiceProvider.getService().getPersonDetails(personId)
+        subscription = PeopleServiceProvider.getService().getPersonDetails(personId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::gotPerson, this::gotError);
@@ -195,4 +197,15 @@ public class PersonDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subscription.unsubscribe();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        DataBag.removePersonFromPocket(personId);
+    }
 }

@@ -10,10 +10,11 @@
         android:padding="2dp"
         android:gravity="center_horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView    xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_pic"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="@dimen/person_large_thumb_dimen"
+            android:layout_height="@dimen/person_large_thumb_dimen"
             app:civ_border_width="2dp"
             app:civ_border_color="#ddd"
             android:layout_centerHorizontal="true"

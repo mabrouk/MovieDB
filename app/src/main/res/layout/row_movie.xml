@@ -14,8 +14,8 @@
         >
 
         <ImageView android:id="@+id/thumbnail"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="@dimen/movie_thumb_width"
+            android:layout_height="@dimen/movie_thumb_height"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"/>
 

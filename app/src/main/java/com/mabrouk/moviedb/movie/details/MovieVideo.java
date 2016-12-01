@@ -21,10 +21,6 @@ public class MovieVideo {
 
     String key;
 
-    public String getUrl() {
-        return "https://www.youtube.com/watch?v=" + key;
-    }
-
     public String getThumbnailUrl() {
         return String.format("https://i.ytimg.com/vi/%s/hqdefault.jpg", key);
     }

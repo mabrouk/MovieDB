@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by VPN on 11/4/2016.
  */
 
-public class ServiceProvider {
+public class MovieServiceProvider {
     private static MovieService movieService = new Retrofit.Builder()
             .baseUrl(ApiInfo.BASE_URL)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

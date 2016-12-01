@@ -23,10 +23,24 @@
             android:layout_margin="2dp"
             android:textColor="#000"/>
 
-        <ImageView android:id="@+id/thumbnail"
-            android:layout_width="293dp"
-            android:layout_height="165dp"
-            android:scaleType="centerCrop"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView android:id="@+id/thumbnail"
+                android:layout_width="293dp"
+                android:layout_height="165dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_youtube_icon_full_color"/>
+
+        </FrameLayout>
 
     </LinearLayout>
+
+
 </android.support.v7.widget.CardView>

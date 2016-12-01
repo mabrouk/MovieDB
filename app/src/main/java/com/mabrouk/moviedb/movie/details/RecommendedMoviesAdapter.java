@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.movie.details;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.common.RatingUtils;
+import com.mabrouk.moviedb.common.Utils.RatingUtils;
 import com.mabrouk.moviedb.movie.Movie;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,9 +22,11 @@ import java.util.List;
 
 public class RecommendedMoviesAdapter extends RecyclerView.Adapter<RecommendedMoviesAdapter.RecommendedMoviesViewHolder>{
     List<Movie> movies;
-
-    public RecommendedMoviesAdapter(List<Movie> movies) {
+    int thumbWidth, thumbHeight;
+    public RecommendedMoviesAdapter(List<Movie> movies, Resources resources) {
         this.movies = movies;
+        thumbWidth = (int) resources.getDimension(R.dimen.recommended_thum_width);
+        thumbHeight = (int) resources.getDimension(R.dimen.recommended_thum_height);
     }
 
     @Override
@@ -42,8 +46,12 @@ public class RecommendedMoviesAdapter extends RecyclerView.Adapter<RecommendedMo
         holder.itemView.setTag(movie);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(movie.getDisplayableRating());
-        RatingUtils.loadRatingDrawableIntoView(movie, holder.rating);
-        Picasso.with(holder.itemView.getContext()).load(movie.getLargeThumbnailUrl()).into(holder.thumbnail);
+        RatingUtils.loadRatingDrawableIntoView(movie.getRating(), holder.rating);
+        String thumbUrl = new MediaUrlBuilder(movie.getPosterPath())
+                .addType(MediaUrlBuilder.TYPE_POSTER)
+                .addSize(thumbWidth, thumbHeight)
+                .build();
+        Picasso.with(holder.itemView.getContext()).load(thumbUrl).into(holder.thumbnail);
     }
 
     @Override

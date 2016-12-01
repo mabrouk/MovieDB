@@ -2,12 +2,9 @@ package com.mabrouk.moviedb.movie;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
+import com.mabrouk.moviedb.common.Utils.DateUtils;
 import com.mabrouk.moviedb.genres.Genre;
-import com.mabrouk.moviedb.network.ApiInfo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,7 +12,7 @@ import java.util.Locale;
  * Created by VPN on 11/1/2016.
  */
 
-public class Movie extends BaseModel{
+public class Movie extends BaseModel {
     String title;
     @SerializedName("poster_path")
     String posterPath;
@@ -77,32 +74,16 @@ public class Movie extends BaseModel{
         return overview;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
     public String getFormattedReleaseDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date tmp = null;
-        try {
-            tmp = dateFormat.parse(releaseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        dateFormat = new SimpleDateFormat("dd MMM yyyy");
-        return dateFormat.format(tmp);
+        return DateUtils.formatDateString(releaseDate);
     }
 
-    public String getThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_THUMBNAIL + posterPath;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public String getLargeThumbnailUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.POSTER_SIZE_LARGE_THUMBNAIL + posterPath;
-    }
-
-    public String getBackdropUrl() {
-        return ApiInfo.IMAGES_BASE_URL + ApiInfo.BACKDROP_SIZE_XHIGH + backdropPath;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
     public String getDisplayableRating() {

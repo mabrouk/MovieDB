@@ -3,27 +3,44 @@
     package="com.mabrouk.moviedb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".common.MovieDBApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".movie.details.MovieDetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".common.WebviewActivity"
+        <activity
+            android:name=".people.details.PersonDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tv.details.TvDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tv.season.SeasonActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".people.details.GalleryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".genres.MovieByGenreActivity"
             android:screenOrientation="portrait"/>
     </application>
 

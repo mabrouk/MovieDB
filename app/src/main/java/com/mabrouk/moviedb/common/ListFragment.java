@@ -27,6 +27,10 @@ public abstract class ListFragment<T extends BaseModel> extends Fragment impleme
     public void setPagesLoader(PagesLoader pagesLoader) {
         this.pagesLoader = pagesLoader;
         pagesLoader.listenForPageLoaded(this);
+        if(adapter != null) {
+            adapter.clear();
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

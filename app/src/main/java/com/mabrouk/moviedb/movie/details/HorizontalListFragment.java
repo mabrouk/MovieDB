@@ -2,7 +2,6 @@ package com.mabrouk.moviedb.movie.details;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.movie.api.ServiceProvider;
-
-import java.util.List;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by VPN on 11/5/2016.
@@ -43,9 +36,6 @@ public abstract class HorizontalListFragment extends Fragment{
         progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
         emptyText = (TextView) root.findViewById(R.id.empty_textview);
         errorText = (TextView) root.findViewById(R.id.error_textview);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
 
         downloadData();
         return root;

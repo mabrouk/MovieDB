@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.mabrouk.moviedb.movie.Movie;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +49,10 @@ public abstract class PagingAdapter<T extends BaseModel,VH extends RecyclerView.
     @Override
     public long getItemId(int position) {
         return list.get(position).getId();
+    }
+
+    public void clear() {
+        list.clear();
+        notifyDataSetChanged();
     }
 }

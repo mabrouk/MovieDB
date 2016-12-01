@@ -5,13 +5,7 @@ import android.support.v4.app.Fragment;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagesLoader;
 import com.mabrouk.moviedb.movie.MovieListFragment;
-import com.mabrouk.moviedb.movie.api.MovieService;
-import com.mabrouk.moviedb.movie.api.ServiceProvider;
-import com.mabrouk.moviedb.network.ApiInfo;
-
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 
 /**
  * Created by VPN on 11/2/2016.
@@ -49,7 +43,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getPopularFragment() {
         if(popularFragment == null) {
             popularFragment = new MovieListFragment();
-            popularFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::popular));
+            popularFragment.setPagesLoader(new PagesLoader<>(MovieServiceProvider.getService()::popular));
         }
         return popularFragment;
     }
@@ -57,7 +51,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getTopRatedFragment() {
         if(topRatedFragment == null) {
             topRatedFragment = new MovieListFragment();
-            topRatedFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::topRated));
+            topRatedFragment.setPagesLoader(new PagesLoader<>(MovieServiceProvider.getService()::topRated));
         }
         return topRatedFragment;
     }
@@ -65,7 +59,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getNowPlayingFragment() {
         if(nowPlayingFragment == null) {
             nowPlayingFragment = new MovieListFragment();
-            nowPlayingFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::nowPlayingMovies));
+            nowPlayingFragment.setPagesLoader(new PagesLoader<>(MovieServiceProvider.getService()::nowPlayingMovies));
         }
         return nowPlayingFragment;
     }
@@ -73,7 +67,7 @@ public class MovieListFragmentFactory {
     private MovieListFragment getUpcomingFragment() {
         if(upcomingFragment == null) {
             upcomingFragment = new MovieListFragment();
-            upcomingFragment.setPagesLoader(new PagesLoader<>(ServiceProvider.getService()::nowPlayingMovies));
+            upcomingFragment.setPagesLoader(new PagesLoader<>(MovieServiceProvider.getService()::nowPlayingMovies));
         }
         return upcomingFragment;
     }

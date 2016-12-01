@@ -4,6 +4,7 @@
         <item>Movies</item>
         <item>Tv Shows</item>
         <item>People</item>
+        <item>Movie Genres</item>
     </string-array>
 
 </resources>

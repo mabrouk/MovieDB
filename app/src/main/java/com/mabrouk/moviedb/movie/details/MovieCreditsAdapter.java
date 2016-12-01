@@ -1,5 +1,6 @@
 package com.mabrouk.moviedb.movie.details;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
+import com.mabrouk.moviedb.network.MediaUrlBuilder;
+import com.mabrouk.moviedb.people.details.PersonDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -16,9 +19,11 @@ import com.squareup.picasso.Picasso;
 
 public class MovieCreditsAdapter extends RecyclerView.Adapter<MovieCreditsAdapter.CreditsViewHolder> {
     MovieCredits credits;
+    int profileDimen;
 
-    public MovieCreditsAdapter(MovieCredits credits) {
+    public MovieCreditsAdapter(MovieCredits credits, Resources resources) {
         this.credits = credits;
+        profileDimen = (int) resources.getDimension(R.dimen.person_large_thumb_dimen);
     }
 
     @Override
@@ -29,18 +34,14 @@ public class MovieCreditsAdapter extends RecyclerView.Adapter<MovieCreditsAdapte
 
     @Override
     public void onBindViewHolder(CreditsViewHolder holder, int position) {
-        String profileUrl;
-//        if(position < credits.crew.size()) {
-//            Crew crew = credits.crew.get(position);
-//            holder.name.setText(crew.getName());
-//            holder.role.setText(crew.getJob());
-//            profileUrl = crew.getProfileUrl();
-//        }else{
-            Cast cast = credits.cast.get(position);
-            holder.name.setText(cast.getName());
-            holder.role.setText(cast.getCharacter());
-            profileUrl = cast.getProfileUrl();
-//        }
+        Cast cast = credits.cast.get(position);
+        String profileUrl = new MediaUrlBuilder(cast.getProfilePath())
+                .addSize(profileDimen, profileDimen)
+                .addType(MediaUrlBuilder.TYPE_PROFILE)
+                .build();
+        holder.name.setText(cast.getName());
+        holder.role.setText(cast.getCharacter());
+        holder.itemView.setOnClickListener(view -> PersonDetailsActivity.startInstance(view.getContext(), cast));
         Picasso.with(holder.itemView.getContext()).load(profileUrl).into(holder.profilePic);
     }
 

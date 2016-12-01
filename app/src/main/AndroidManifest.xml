@@ -27,9 +27,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".common.WebviewActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".people.details.PersonDetailsActivity"
             android:screenOrientation="portrait" />
         <activity

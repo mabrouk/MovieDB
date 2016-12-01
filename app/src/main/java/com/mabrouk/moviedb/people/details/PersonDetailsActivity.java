@@ -2,7 +2,10 @@ package com.mabrouk.moviedb.people.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +21,6 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
-import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.people.api.PeopleServiceProvider;
@@ -101,37 +103,42 @@ public class PersonDetailsActivity extends AppCompatActivity {
         ExternalIds externalIds = person.getExternalIds();
         if (externalIds.hasFacebook()) {
             facebookButton.setVisibility(View.VISIBLE);
-            facebookButton.setOnClickListener(view ->
-                    openExternal(externalIds.getFacebookUrl(), person.getName() + "'s Facebook"));
+            facebookButton.setOnClickListener(view -> openExternal(externalIds.getFacebookUrl()));
         }
 
         if (externalIds.hasTwitter()) {
             twitterButton.setVisibility(View.VISIBLE);
-            twitterButton.setOnClickListener(view ->
-                    openExternal(externalIds.getTwitterUrl(), person.getName() + "'s Twitter"));
+            twitterButton.setOnClickListener(view -> openExternal(externalIds.getTwitterUrl()));
         }
 
         if (externalIds.hasInstagram()) {
             instagramButton.setVisibility(View.VISIBLE);
-            instagramButton.setOnClickListener(view ->
-                    openExternal(externalIds.getInstagramUrl(), person.getName() + "'s Instagram"));
+            instagramButton.setOnClickListener(view -> openExternal(externalIds.getInstagramUrl()));
         }
 
         if (person.hasHomepage()) {
             homepageButton.setVisibility(View.VISIBLE);
-            homepageButton.setOnClickListener(view ->
-                    openExternal(person.getHomepage(), person.getName() + "'s Homepage"));
+            homepageButton.setOnClickListener(view -> openExternal(person.getHomepage()));
         }
 
         if (person.hasImdb()) {
             imdbButton.setVisibility(View.VISIBLE);
-            imdbButton.setOnClickListener(view ->
-                    openExternal(person.getImbdUrl(), person.getName() + "'s IMDB"));
+            imdbButton.setOnClickListener(view -> openExternal(person.getImbdUrl()));
         }
     }
 
-    private void openExternal(String url, String title) {
-        WebviewActivity.startInstance(this, url, title);
+    private void openExternal(String url) {
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+            builder.addDefaultShareMenuItem();
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(this, Uri.parse(url));
+        }else{
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        }
     }
 
     void gotError(Throwable e) {

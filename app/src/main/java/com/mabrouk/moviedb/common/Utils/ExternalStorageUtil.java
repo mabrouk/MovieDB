@@ -1,7 +1,9 @@
-package com.mabrouk.moviedb.common;
+package com.mabrouk.moviedb.common.Utils;
 
 import android.media.MediaScannerConnection;
 import android.os.Environment;
+
+import com.mabrouk.moviedb.common.MovieDBApplication;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +28,8 @@ public class ExternalStorageUtil {
 
     public static boolean copyImageIntoExternalImageDirectory(File imageFile) {
         try {
+            if(!isExternalStorageWritable())
+                return false;
             File galleryDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
             File movieDBGalleryDir = new File(galleryDir, "MovieDB");
             if(!movieDBGalleryDir.exists() && !movieDBGalleryDir.mkdirs())

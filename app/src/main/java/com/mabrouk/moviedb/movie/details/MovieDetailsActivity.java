@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
-import com.mabrouk.moviedb.common.GenresLayout;
-import com.mabrouk.moviedb.common.PaletteCreationUtils;
-import com.mabrouk.moviedb.common.RatingUtils;
+import com.mabrouk.moviedb.genres.MovieByGenreActivity;
+import com.mabrouk.moviedb.genres.view.GenresLayout;
+import com.mabrouk.moviedb.common.Utils.PaletteCreationUtils;
+import com.mabrouk.moviedb.common.Utils.RatingUtils;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.movie.api.MovieServiceProvider;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
@@ -128,6 +129,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             genresLayout.setMessage("No Genres Available");
         } else {
             genresLayout.setGenres(movie.getGenres());
+            genresLayout.setOnGenreClickedListener(genre -> MovieByGenreActivity.startInstance(this, genre));
         }
     }
 

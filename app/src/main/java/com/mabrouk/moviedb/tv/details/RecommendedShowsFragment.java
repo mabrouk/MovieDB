@@ -4,9 +4,8 @@ import android.view.View;
 
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.details.HorizontalListFragment;
-import com.mabrouk.moviedb.movie.details.RecommendedMoviesAdapter;
 import com.mabrouk.moviedb.tv.Tv;
-import com.mabrouk.moviedb.tv.TvServiceProvider;
+import com.mabrouk.moviedb.tv.api.TvServiceProvider;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

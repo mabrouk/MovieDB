@@ -1,4 +1,4 @@
-package com.mabrouk.moviedb.common;
+package com.mabrouk.moviedb.common.Utils;
 
 /**
  * Created by VPN on 11/5/2016.

@@ -2,12 +2,10 @@ package com.mabrouk.moviedb.tv;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
-import com.mabrouk.moviedb.common.DateUtils;
+import com.mabrouk.moviedb.common.Utils.DateUtils;
 import com.mabrouk.moviedb.genres.Genre;
 import com.mabrouk.moviedb.movie.details.MovieCredits;
-import com.mabrouk.moviedb.network.ApiInfo;
 import com.mabrouk.moviedb.people.Person;
-import com.mabrouk.moviedb.people.details.ExternalIds;
 import com.mabrouk.moviedb.tv.season.Season;
 
 import java.util.Collections;

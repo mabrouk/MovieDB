@@ -59,7 +59,8 @@
            android:layout_marginBottom="8dp"
            android:layout_marginTop="8dp"/>
 
-       <com.mabrouk.moviedb.common.GenresLayout android:id="@+id/genres_layout"
+       <com.mabrouk.moviedb.genres.view.GenresLayout
+           android:id="@+id/genres_layout"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>
 

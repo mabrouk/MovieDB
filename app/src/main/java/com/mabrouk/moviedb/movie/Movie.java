@@ -2,9 +2,8 @@ package com.mabrouk.moviedb.movie;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
-import com.mabrouk.moviedb.common.DateUtils;
+import com.mabrouk.moviedb.common.Utils.DateUtils;
 import com.mabrouk.moviedb.genres.Genre;
-import com.mabrouk.moviedb.network.ApiInfo;
 
 import java.util.List;
 import java.util.Locale;

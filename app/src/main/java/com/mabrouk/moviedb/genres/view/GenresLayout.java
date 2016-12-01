@@ -1,4 +1,4 @@
-package com.mabrouk.moviedb.common;
+package com.mabrouk.moviedb.genres.view;
 
 import android.content.Context;
 import android.os.Build;

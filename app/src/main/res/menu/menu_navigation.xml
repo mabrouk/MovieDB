@@ -14,6 +14,9 @@
             android:title="People"
             android:icon="@drawable/ic_face_black_24dp"
             />
+        <item android:id="@+id/genres"
+            android:title="Genres"
+            android:icon="@drawable/ic_view_headline_black_24dp"/>
     </group>
 
 </menu>

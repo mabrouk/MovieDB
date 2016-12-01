@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.tv.Tv;
-import com.mabrouk.moviedb.tv.TvServiceProvider;
+import com.mabrouk.moviedb.tv.api.TvServiceProvider;
 
 import java.util.List;
 

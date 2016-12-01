@@ -2,10 +2,9 @@ package com.mabrouk.moviedb.people;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
-import com.mabrouk.moviedb.common.DateUtils;
-import com.mabrouk.moviedb.common.ExternalUrlUtil;
+import com.mabrouk.moviedb.common.Utils.DateUtils;
+import com.mabrouk.moviedb.common.Utils.ExternalUrlUtil;
 import com.mabrouk.moviedb.movie.Movie;
-import com.mabrouk.moviedb.network.ApiInfo;
 import com.mabrouk.moviedb.people.details.ExternalIds;
 import com.mabrouk.moviedb.people.details.PersonCredit;
 import com.mabrouk.moviedb.people.details.PersonResult;

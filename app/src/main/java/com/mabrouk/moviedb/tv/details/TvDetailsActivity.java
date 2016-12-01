@@ -11,17 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.DataBag;
-import com.mabrouk.moviedb.common.GenresLayout;
-import com.mabrouk.moviedb.common.PaletteCreationUtils;
-import com.mabrouk.moviedb.common.RatingUtils;
+import com.mabrouk.moviedb.genres.view.GenresLayout;
+import com.mabrouk.moviedb.common.Utils.PaletteCreationUtils;
+import com.mabrouk.moviedb.common.Utils.RatingUtils;
 import com.mabrouk.moviedb.movie.details.MovieCreditsAdapter;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.tv.Tv;
-import com.mabrouk.moviedb.tv.TvServiceProvider;
+import com.mabrouk.moviedb.tv.api.TvServiceProvider;
 import com.mabrouk.moviedb.tv.season.Season;
 import com.mabrouk.moviedb.tv.season.SeasonActivity;
 
@@ -156,7 +157,8 @@ public class TvDetailsActivity extends AppCompatActivity {
             genresLayout.setMessage("No Genres Available");
         } else {
             genresLayout.setGenres(show.getGenres());
-            genresLayout.setOnGenreClickedListener(genre -> {/*TODO*/});
+            genresLayout.setOnGenreClickedListener(genre -> Toast.makeText(this,
+                    "Tv shows filter by genre isn't supported currently by the MovieDB service", Toast.LENGTH_SHORT).show());
         }
     }
 

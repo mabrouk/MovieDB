@@ -1,7 +1,8 @@
-package com.mabrouk.moviedb.people;
+package com.mabrouk.moviedb.people.api;
 
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.network.ApiInfo;
+import com.mabrouk.moviedb.people.Person;
 import com.mabrouk.moviedb.people.details.PersonResult;
 
 import retrofit2.http.GET;

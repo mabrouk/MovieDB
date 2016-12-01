@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagesLoader;
+import com.mabrouk.moviedb.people.api.PeopleServiceProvider;
 
 /**
  * Created by VPN on 11/22/2016.

@@ -6,7 +6,7 @@ import com.mabrouk.moviedb.movie.details.HorizontalListFragment;
 import com.mabrouk.moviedb.movie.details.MovieVideo;
 import com.mabrouk.moviedb.movie.details.MovieVideosAdapter;
 import com.mabrouk.moviedb.tv.Tv;
-import com.mabrouk.moviedb.tv.TvServiceProvider;
+import com.mabrouk.moviedb.tv.api.TvServiceProvider;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

@@ -1,4 +1,4 @@
-package com.mabrouk.moviedb.people;
+package com.mabrouk.moviedb.tv.api;
 
 import com.mabrouk.moviedb.network.ApiInfo;
 
@@ -7,16 +7,16 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by User on 11/7/2016.
+ * Created by User on 11/12/2016.
  */
 
-public class PeopleServiceProvider {
-    private static PeopleService service = new Retrofit.Builder().baseUrl(ApiInfo.BASE_URL)
+public class TvServiceProvider {
+    private static TvService service = new Retrofit.Builder().baseUrl(ApiInfo.BASE_URL)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
-            .build().create(PeopleService.class);
+            .build().create(TvService.class);
 
-    public static PeopleService getService() {
+    public static TvService getService() {
         return service;
     }
 }

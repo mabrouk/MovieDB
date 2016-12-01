@@ -1,8 +1,9 @@
-package com.mabrouk.moviedb.tv;
+package com.mabrouk.moviedb.tv.api;
 
 import com.mabrouk.moviedb.common.ResultList;
 import com.mabrouk.moviedb.movie.details.MovieVideo;
 import com.mabrouk.moviedb.network.ApiInfo;
+import com.mabrouk.moviedb.tv.Tv;
 import com.mabrouk.moviedb.tv.season.Season;
 
 import retrofit2.http.GET;

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.common.RatingUtils;
+import com.mabrouk.moviedb.common.Utils.RatingUtils;
 import com.mabrouk.moviedb.movie.Movie;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.squareup.picasso.Picasso;

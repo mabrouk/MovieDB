@@ -2,7 +2,7 @@ package com.mabrouk.moviedb.tv.season;
 
 import com.google.gson.annotations.SerializedName;
 import com.mabrouk.moviedb.common.BaseModel;
-import com.mabrouk.moviedb.common.DateUtils;
+import com.mabrouk.moviedb.common.Utils.DateUtils;
 
 /**
  * Created by VPN on 11/21/2016.

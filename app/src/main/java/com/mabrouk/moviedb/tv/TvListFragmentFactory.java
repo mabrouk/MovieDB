@@ -2,6 +2,7 @@ package com.mabrouk.moviedb.tv;
 
 import com.mabrouk.moviedb.R;
 import com.mabrouk.moviedb.common.PagesLoader;
+import com.mabrouk.moviedb.tv.api.TvServiceProvider;
 
 /**
  * Created by VPN on 11/3/2016.

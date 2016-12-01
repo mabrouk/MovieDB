@@ -1,14 +1,10 @@
-package com.mabrouk.moviedb.common;
+package com.mabrouk.moviedb.common.Utils;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
 
-import com.mabrouk.moviedb.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 

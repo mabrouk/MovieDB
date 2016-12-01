@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mabrouk.moviedb.R;
-import com.mabrouk.moviedb.common.ExternalUrlUtil;
+import com.mabrouk.moviedb.common.Utils.ExternalUrlUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

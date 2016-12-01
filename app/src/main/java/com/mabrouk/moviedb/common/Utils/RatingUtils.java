@@ -1,4 +1,4 @@
-package com.mabrouk.moviedb.common;
+package com.mabrouk.moviedb.common.Utils;
 
 import android.view.View;
 

@@ -21,7 +21,7 @@ import com.mabrouk.moviedb.common.DataBag;
 import com.mabrouk.moviedb.common.WebviewActivity;
 import com.mabrouk.moviedb.network.MediaUrlBuilder;
 import com.mabrouk.moviedb.people.Person;
-import com.mabrouk.moviedb.people.PeopleServiceProvider;
+import com.mabrouk.moviedb.people.api.PeopleServiceProvider;
 import com.squareup.picasso.Picasso;
 
 import rx.Subscription;

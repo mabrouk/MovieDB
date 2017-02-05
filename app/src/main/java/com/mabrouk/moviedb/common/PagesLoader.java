@@ -37,7 +37,7 @@ public class PagesLoader<RD extends BaseModel> {
     }
 
     public void loadNextPage() {
-        if(loading)
+        if(listener == null || loading)
             return;
         if(hasMorePages()) {
             loading = true;
@@ -58,8 +58,10 @@ public class PagesLoader<RD extends BaseModel> {
     }
 
     public void listenForPageLoaded(PageLoadedListener listener) {
-        this.listener = listener;
-        loadNextPage();
+        if(listener != null) {
+            this.listener = listener;
+            loadNextPage();
+        }
     }
 
     public boolean hasMorePages() {
@@ -67,10 +69,12 @@ public class PagesLoader<RD extends BaseModel> {
     }
 
     public void stopListeningForPageLoaded(PageLoadedListener listener) {
-        this.listener = null;
-        if(subscription != null)
-            subscription.unsubscribe();
-        subscription = null;
+        if(listener == this.listener) {
+            this.listener = null;
+            if (subscription != null)
+                subscription.unsubscribe();
+            subscription = null;
+        }
     }
 
     protected void loadedPage(List<RD> rawDataList) {

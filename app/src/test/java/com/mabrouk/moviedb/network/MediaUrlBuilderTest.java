@@ -1,9 +1,8 @@
-package com.mabrouk.moviedb;
+package com.mabrouk.moviedb.network;
 
 import com.mabrouk.moviedb.common.ScreenConstants;
 import com.mabrouk.moviedb.configurations.ConfigurationDefaults;
 import com.mabrouk.moviedb.configurations.ConfigurationsStore;
-import com.mabrouk.moviedb.network.MediaUrlBuilder;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertTrue;
  * Created by VPN on 11/13/2016.
  */
 
-public class ConfigurationTesting {
+public class MediaUrlBuilderTest {
     String posterUrl = "/xfWac8MTYDxujaxgPVcRD9yZaul.jpg";
     String backdropUrl = "/tFI8VLMgSTTU38i8TIsklfqS9Nl.jpg";
     String profileUrl = "/nkrIGojQy6FNn9s5cfpiUAmLeNz.jpg";

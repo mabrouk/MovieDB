@@ -1,10 +1,7 @@
-package com.mabrouk.moviedb;
-
-import com.mabrouk.moviedb.common.BaseModel;
-import com.mabrouk.moviedb.common.PagesLoader;
-import com.mabrouk.moviedb.common.ResultList;
+package com.mabrouk.moviedb.common;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayDeque;
@@ -22,6 +19,7 @@ import rx.schedulers.Schedulers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -52,27 +50,10 @@ public class PagesLoaderTest {
         }
     }
 
-    LoadedListener loadedListener = new LoadedListener();
+    LoadedListener loadedListener;
 
-    @Before
-    public void setup() {
-        //mocks
-        emptyResultList = mock(ResultList.class);
-        when(emptyResultList.getResults()).thenReturn(new ArrayList<>());
-        when(emptyResultList.getTotalPages()).thenReturn(1);
-
-        twoPagesResult = mock(ResultList.class);
-        when(twoPagesResult.getResults()).thenReturn(Arrays.asList(new BaseModel(), new BaseModel(), new BaseModel()));
-        when(twoPagesResult.getTotalPages()).thenReturn(2);
-
-        onePagesResult = mock(ResultList.class);
-        when(onePagesResult.getResults()).thenReturn(Arrays.asList(new BaseModel(), new BaseModel()));
-        when(onePagesResult.getTotalPages()).thenReturn(2);
-
-        errorResult = mock(ResultList.class);
-        when(errorResult.getResults()).thenThrow(new RuntimeException("Just a runtime exception"));
-        when(errorResult.getTotalPages()).thenThrow(new RuntimeException("Just a runtime exception"));
-
+    @BeforeClass
+    public static void staticSetup() {
         //Rx hooks to override schedulers
         RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
         RxAndroidPlugins.getInstance().reset();
@@ -84,18 +65,60 @@ public class PagesLoaderTest {
         });
     }
 
-    @Test
-    public void testEmptyResultList() {
-        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(emptyResultList));
-        assertThat(pagesLoader.hasMorePages()).isEqualTo(true);
-        pagesLoader.listenForPageLoaded(loadedListener);
-        assertThat(loadedListener.page).as("Empty result should be empty page").isEmpty();
-        assertThat(loadedListener.hasError).as("Empty result shouldn't have an error").isEqualTo(false);
-        assertThat(pagesLoader.hasMorePages()).isEqualTo(false);
+    @Before
+    public void setup() {
+        loadedListener = new LoadedListener();
+
+        emptyResultList = createResultList(new ArrayList<>(), 1);
+        twoPagesResult = createResultList(Arrays.asList(new BaseModel(), new BaseModel(), new BaseModel()), 2);
+        onePagesResult = createResultList(Arrays.asList(new BaseModel(), new BaseModel()), 2);
+
+        errorResult = mock(ResultList.class);
+        when(errorResult.getResults()).thenThrow(new RuntimeException("Just a runtime exception"));
+        when(errorResult.getTotalPages()).thenThrow(new RuntimeException("Just a runtime exception"));
     }
 
     @Test
-    public void testTwoResultsList() {
+    public void newPagesLoaderHasPagesToGetTest() {
+        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(emptyResultList));
+        assertThat(pagesLoader.hasMorePages()).isEqualTo(true);
+    }
+
+    @Test
+    public void testNullListenerDoesntTriggerLoading() {
+        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(onePagesResult));
+        pagesLoader.listenForPageLoaded(null);
+        assertThat(pagesLoader.hasMorePages()).isTrue();
+    }
+
+    @Test
+    public void testPagesLoaderLoadsEmptyList() {
+        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(emptyResultList));
+        pagesLoader.listenForPageLoaded(loadedListener);
+
+        assertThat(loadedListener.page).as("Empty result should be empty page").isEmpty();
+        assertThat(pagesLoader.hasMorePages()).as("Empty result doesn't have more pages").isEqualTo(false);
+    }
+
+    @Test
+    public void testFailureInPageLoading() {
+        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(errorResult));
+        pagesLoader.listenForPageLoaded(loadedListener);
+
+        assertThat(loadedListener.hasError).as("Failed to load the page should signal error").isEqualTo(true);
+        assertThat(pagesLoader.hasMorePages()).as("Failure in loading page doesn't change ability to load more pages").isEqualTo(true);
+    }
+
+    @Test
+    public void testLoadingPage() {
+        PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> Observable.just(onePagesResult));
+        pagesLoader.listenForPageLoaded(loadedListener);
+
+        assertThat(loadedListener.page).size().as("Check that loaded page has three elements").isEqualTo(2);
+    }
+
+    @Test
+    public void testLoadingAnotherPage() {
         PagesLoader<BaseModel> pagesLoader = new PagesLoader<>(page -> {
             if(page == 1) {
                 return Observable.just(twoPagesResult);
@@ -103,18 +126,15 @@ public class PagesLoaderTest {
                 return Observable.just(onePagesResult);
             }
         });
-
         pagesLoader.listenForPageLoaded(loadedListener);
-        assertThat(loadedListener.page).size().as("Check that first page got three elements").isEqualTo(3);
-        assertThat(pagesLoader.hasMorePages()).as("Check that after two pages has one more page").isEqualTo(true);
-
         pagesLoader.loadNextPage();
+
         assertThat(loadedListener.page).size().as("Check that second page has size of 2").isEqualTo(2);
-        assertThat(pagesLoader.hasMorePages()).isEqualTo(false);
+        assertThat(pagesLoader.hasMorePages()).as("Check that after loading second page there are no more pages").isEqualTo(false);
     }
 
     @Test
-    public void testError() {
+    public void testLoadPageSuccessfullyAfterFailureAttempt() {
         final Queue<ResultList<BaseModel>> errorQueue = new ArrayDeque<>();
         errorQueue.add(errorResult);
         errorQueue.add(onePagesResult);
@@ -125,9 +145,19 @@ public class PagesLoaderTest {
         });
 
         pagesLoader.listenForPageLoaded(loadedListener);
-        assertThat(loadedListener.hasError).as("Got error").isEqualTo(true);
         pagesLoader.loadNextPage();
+
         assertThat(loadedListener.hasError).as("No error on retry").isEqualTo(false);
         assertThat(loadedListener.page).size().as("Got result on retry").isEqualTo(2);
+    }
+
+
+    //util
+
+    ResultList<BaseModel> createResultList(List<BaseModel> list, int totalPages) {
+        ResultList<BaseModel> resultList = new ResultList<>();
+        resultList.totalPages = totalPages;
+        resultList.results = list;
+        return resultList;
     }
 }

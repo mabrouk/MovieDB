@@ -3,7 +3,6 @@ package com.mabrouk.moviedb.network;
 import android.support.annotation.IntDef;
 
 import com.mabrouk.moviedb.common.ScreenConstants;
-import com.mabrouk.moviedb.configurations.ConfigurationDefaults;
 import com.mabrouk.moviedb.configurations.ConfigurationSelector;
 import com.mabrouk.moviedb.configurations.ConfigurationsStore;
 
@@ -61,7 +60,7 @@ public class MediaUrlBuilder {
      * @return url for the specified resource
      */
     public String build() {
-        String baseUrl = ConfigurationDefaults.IMAGES_DEFAULT_BASE_URL;
+        String baseUrl = ApiInfo.IMAGES_BASE_URL;
         String configPath;
         if(mediaType == 0) {
             configPath = "original";
